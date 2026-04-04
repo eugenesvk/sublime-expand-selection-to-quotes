@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file
 
-[unreleased]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/compare/0.0.1...HEAD
+[unreleased]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/compare/0.0.2...HEAD
 ## [Unreleased]
 <!-- - ✨ __Added__ -->
   <!-- + new features -->
@@ -15,6 +15,9 @@ All notable changes to this project will be documented in this file
   <!-- + now removed features -->
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
+
+[0.0.2]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.0.2
+## [0.0.2]
 
 - Δ __Changed__
   + Plugin host version to Python 3.8
