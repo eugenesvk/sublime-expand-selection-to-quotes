@@ -15,11 +15,30 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 			if len(quotes) - self.view.substr(sel).count('"') >= 2:
 				all_before = list(filter(lambda x: x <  sel.begin(), quotes))
 				all_after  = list(filter(lambda x: x >= sel.end  (), quotes))
+				before, after = None, None
 
-				if all_before: before = all_before[-1]
-				if all_after : after  = all_after [ 0]
+				if all_before: # Find escaped quotes and skip them
+					for  i_q in reversed(all_before):
+						if i_q == 0:
+							before = i_q
+							break
+						else:
+							char_pre_q = self.view.substr(i_q - 1)
+							if not char_pre_q == self.esc:
+								before = i_q
+								break
+				if all_after:
+					for  i_q in          all_after  :
+						if i_q == 0: # shouldn't happen, but just in case
+							after = i_q
+							break
+						else:
+							char_pre_q = self.view.substr(i_q - 1)
+							if not char_pre_q == self.esc:
+								after = i_q
+								break
 
-				if all_before and all_after: q_size = after - before
+				if before is not None and after is not None: q_size = after - before
 
 			return q_size, before, after
 
