@@ -1,13 +1,5 @@
 [
-	{
-	    "id": "selection",
-	    "children":
-	    [
-	        {
-	        	"id": "expand_selection_to_quotes",
-	        	"caption": "Expand Selection to Quotes",
-	        	"command": "expand_selection_to_quotes"
-	    	}
-	    ]
-	}
+{"id":"selection", "children":[
+  {"caption":"Expand Selection to Quotes"	,"id":"expand_selection_to_quotes","command":"expand_selection_to_quotes"}]
+}
 ]
