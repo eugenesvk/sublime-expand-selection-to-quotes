@@ -16,5 +16,8 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- Δ __Changed__
+  + Plugin host version to Python 3.8
+
 [0.0.1]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.0.1
 ## [0.0.1]
