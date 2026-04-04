@@ -1,10 +1,13 @@
 import sublime, sublime_plugin
 
 class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
+	q_same = ('"', "'", "`")
+	esc    = "\\"
+
 	def run(self, edit):
-		double_quotes   = list(map(lambda x: x.begin(), self.view.find_all('"')))
-		single_quotes   = list(map(lambda x: x.begin(), self.view.find_all("'")))
-		backtick_quotes = list(map(lambda x: x.begin(), self.view.find_all("`")))
+		q_all = {}
+		for q in self.q_same:
+			q_all[q] = list(map(lambda x: x.begin(), self.view.find_all(q)))
 
 		def search_for_quotes(q_type, quotes):
 			q_size, before, after = False, False, False
@@ -27,15 +30,17 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 			self.view.sel().add(sublime.Region(start, end))
 
 		for sel in self.view.sel():
+			q_res = {}
+			for q in self.q_same:
+				sz, pre, pos = search_for_quotes(q,q_all[q])
+				q_res[sz] = (pre,pos)
 
-			d_size, d_before, d_after = search_for_quotes('"', double_quotes  )
-			s_size, s_before, s_after = search_for_quotes("'", single_quotes  )
-			b_size, b_before, b_after = search_for_quotes("`", backtick_quotes)
-
-
-			if   d_size and (not s_size or d_size < s_size) and (not b_size or d_size < b_size):
-				replace_region(d_before, d_after+1)
-			elif s_size and (not d_size or s_size < d_size) and (not b_size or s_size < b_size):
-				replace_region(s_before, s_after+1)
-			elif b_size and (not d_size or b_size < d_size) and (not s_size or b_size < s_size):
-				replace_region(b_before, b_after+1)
+			min_sz = None
+			for sz in q_res: # find the nearest quotes…
+				if sz:
+					if not min_sz:
+						min_sz =     sz
+					else:
+						min_sz = min(sz, min_sz)
+			if min_sz:      # …use their region for selection
+				replace_region(q_res[min_sz][0], q_res[min_sz][1] + 1)
