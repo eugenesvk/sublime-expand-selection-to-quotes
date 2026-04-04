@@ -2,19 +2,19 @@ import sublime, sublime_plugin
 
 class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		double_quotes = list(map(lambda x: x.begin(), self.view.find_all('"')))
-		single_quotes = list(map(lambda x: x.begin(), self.view.find_all("'")))
+		double_quotes   = list(map(lambda x: x.begin(), self.view.find_all('"')))
+		single_quotes   = list(map(lambda x: x.begin(), self.view.find_all("'")))
 		backtick_quotes = list(map(lambda x: x.begin(), self.view.find_all("`")))
 
 		def search_for_quotes(q_type, quotes):
 			q_size, before, after = False, False, False
 
 			if len(quotes) - self.view.substr(sel).count('"') >= 2:
-				all_before = list(filter(lambda x: x < sel.begin(), quotes))
-				all_after = list(filter(lambda x: x >= sel.end(), quotes))
+				all_before = list(filter(lambda x: x <  sel.begin(), quotes))
+				all_after  = list(filter(lambda x: x >= sel.end  (), quotes))
 
 				if all_before: before = all_before[-1]
-				if all_after: after = all_after[0]
+				if all_after : after  = all_after [ 0]
 
 				if all_before and all_after: q_size = after - before
 
@@ -28,12 +28,12 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 
 		for sel in self.view.sel():
 
-			d_size, d_before, d_after = search_for_quotes('"', double_quotes)
-			s_size, s_before, s_after = search_for_quotes("'", single_quotes)
+			d_size, d_before, d_after = search_for_quotes('"', double_quotes  )
+			s_size, s_before, s_after = search_for_quotes("'", single_quotes  )
 			b_size, b_before, b_after = search_for_quotes("`", backtick_quotes)
 
 
-			if d_size and (not s_size or d_size < s_size) and (not b_size or d_size < b_size):
+			if   d_size and (not s_size or d_size < s_size) and (not b_size or d_size < b_size):
 				replace_region(d_before, d_after+1)
 			elif s_size and (not d_size or s_size < d_size) and (not b_size or s_size < b_size):
 				replace_region(s_before, s_after+1)
