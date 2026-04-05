@@ -1,14 +1,14 @@
 [
-{"caption":"Preferences: Expand Selection to Quotes (Key Bindings)","command":"chain","args":{"commands":[
+{"caption":"Preferences: Expand Selection to Quotes Key Bindings","command":"chain","args":{"commands":[
   {"command":"open_file","args":{"file":"${packages}/Expand Selection to Quotes/Default (${platform}).sublime-keymap"}},
   {"command":"open_file","args":{"file":"${packages}/User/Default (${platform}).sublime-keymap"   }},]}},
-{"caption":"Preferences: Expand Selection to Quotes (Key Bindings) (side-by-side)","command":"edit_settings","args":{
+{"caption":"Preferences: Expand Selection to Quotes Key Bindings (side-by-side)","command":"edit_settings","args":{
   "base_file": "${packages}/Expand Selection to Quotes/Default (${platform}).sublime-keymap",
-  "default"  : "[\n\t$0\n]",},},
+  "default"  : "[\n$0\n]",},},
 {"caption":"Preferences: Expand Selection to Quotes","command":"chain","args":{"commands":[
   {"command":"open_file","args":{"file":"${packages}/Expand Selection to Quotes/Expand Selection To Quotes.sublime-settings"}},
   {"command":"open_file","args":{"file":"${packages}/User/Expand Selection To Quotes.sublime-settings"   }},]}},
 {"caption":"Preferences: Expand Selection to Quotes (side-by-side)","command":"edit_settings","args":{
   "base_file": "${packages}/Expand Selection to Quotes/Expand Selection To Quotes.sublime-settings",
-  "default"  : "[\n\t$0\n]",},},
+  "default"  : "{\n$0\n}",},},
 ]
