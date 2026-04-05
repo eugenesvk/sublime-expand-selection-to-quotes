@@ -16,6 +16,16 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- ✨ __Added__
+  + Language-specific escapes `"\" in Markdown"` or ```"`" in AutoHotkey"```
+  + Language-specific quote-self-escapes like `"Ends with a quote"""` in AutoHotkey
+  + Support for `Expand Selection To Quotes.sublime-settings` to configure escapes
+  + Menu options to open keybinds/settings
+  + Commands to open keybinds/settings
+
+- 🐞 __Fixed__
+  + Escaped quotes not being ignored `"ignore →\"← this"`
+
 [0.0.2]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.0.2
 ## [0.0.2]
 
@@ -24,3 +34,6 @@ All notable changes to this project will be documented in this file
 
 [0.0.1]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.0.1
 ## [0.0.1]
+
+- Δ __Changed__
+  + Removed default keybinds to avoid conflicts with user configuration
