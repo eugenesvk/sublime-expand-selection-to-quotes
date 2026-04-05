@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- 🐞 __Fixed__
+  + Config typo
+
 [0.1.1]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.1.1
 ## [0.1.1]
 
