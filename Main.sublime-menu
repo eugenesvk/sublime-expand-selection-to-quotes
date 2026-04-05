@@ -1,5 +1,30 @@
 [
 {"id":"selection", "children":[
   {"caption":"Expand Selection to \"'`Quotes`'\"","mnemonic":"Q","id":"expand_selection_to_quotes","command":"expand_selection_to_quotes"}]
-}
+},
+{"caption":"Preferences","id":"preferences","children":[
+  {"caption":"Package Settings","mnemonic":"P","id":"package-settings","children":[
+    {"caption":"Expand Selection to Quotes","mnemonic":"Q","id":"expand-selection-to-quotes_pref","children":[
+      {"caption":"Settings – Default+User"     ,"command":"chain"	,"args":{"commands":[
+        {"command":"open_file","args":{"file":"${packages}/Expand Selection to Quotes/Expand Selection to Quotes.sublime-settings"}},
+        {"command":"open_file","args":{"file":"${packages}/User/Expand Selection to Quotes.sublime-settings"}},]}},
+      {"caption":"Key Bindings – Default+User" ,"command":"chain"	,"args":{"commands":[
+        {"command":"open_file","args":{"file":"${packages}/Expand Selection to Quotes/Default (${platform}).sublime-keymap"}},
+        {"command":"open_file","args":{"file":"${packages}/User/Default (${platform}).sublime-keymap"}},]}},
+      {"caption": "-"                                    	                          	},
+      {"caption":"Settings – Default+User (side-by-side)"     ,"command":"edit_settings"	,"args":{
+        "base_file":"${packages}/Expand Selection to Quotes/Expand Selection To Quotes.sublime-settings",
+        "default"  :"[\n\t$0\n]",},},
+      {"caption":"Key Bindings – Default+User (side-by-side)" ,"command":"edit_settings"	,"args":{
+        "base_file":"${packages}/Expand Selection to Quotes/Default (${platform}).sublime-keymap",
+        "default"  :"[\n\t$0\n]",},},
+      {"caption": "-"                    	                      	},
+      {"caption":"Settings - Default"    	,"command":"open_file"	,"args":{"file":"${packages}/Expand Selection to Quotes/Expand Selection to Quotes.sublime-settings"},},
+      {"caption":"Settings - User"       	,"command":"open_file"	,"args":{"file":"${packages}/User/Expand Selection to Quotes.sublime-settings"},},
+      {"caption": "-"                    	                      	},
+      {"caption":"Key Bindings - Default"	,"command":"open_file"	,"args":{"file":"${packages}/Expand Selection to Quotes/Default (${platform}).sublime-keymap"},},
+      {"caption":"Key Bindings - User"   	,"command":"open_file"	,"args":{"file":"${packages}/User/Default (${platform}).sublime-keymap"},},
+      ]}
+    ]}
+  ]}
 ]
