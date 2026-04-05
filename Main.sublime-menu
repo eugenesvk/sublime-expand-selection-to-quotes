@@ -5,13 +5,13 @@
 {"caption":"Preferences","id":"preferences","children":[
   {"caption":"Package Settings","mnemonic":"P","id":"package-settings","children":[
     {"caption":"Expand Selection to Quotes","mnemonic":"Q","id":"expand-selection-to-quotes_pref","children":[
-      {"caption":"Settings – Default+User"     ,"command":"chain"	,"args":{"commands":[
+      {"caption":"Q Settings – Default+User"     ,"mnemonic":"Q","command":"chain"	,"args":{"commands":[
         {"command":"open_file","args":{"file":"${packages}/Expand Selection to Quotes/Expand Selection to Quotes.sublime-settings"}},
         {"command":"open_file","args":{"file":"${packages}/User/Expand Selection to Quotes.sublime-settings"}},]}},
-      {"caption":"Key Bindings – Default+User" ,"command":"chain"	,"args":{"commands":[
+      {"caption":"E Key Bindings – Default+User" ,"mnemonic":"E","command":"chain"	,"args":{"commands":[
         {"command":"open_file","args":{"file":"${packages}/Expand Selection to Quotes/Default (${platform}).sublime-keymap"}},
         {"command":"open_file","args":{"file":"${packages}/User/Default (${platform}).sublime-keymap"}},]}},
-      {"caption": "-"                                    	                          	},
+      {"caption": "-"                                                                   		},
       {"caption":"Settings – Default+User (side-by-side)"     ,"command":"edit_settings"	,"args":{
         "base_file":"${packages}/Expand Selection to Quotes/Expand Selection To Quotes.sublime-settings",
         "default"  :"{\n$0\n}",},},
