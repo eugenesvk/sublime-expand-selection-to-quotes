@@ -1,11 +1,10 @@
-{/* This is a User config template, actual data is within Plugin's python code
- "q_same" : ["\"", "'", "`"], //A list of pair-identical ('', but not ‘’) quotes to check for
-"esc" : {""      	:"\\",      //A dictionary of Sublime Text's scope syntax names and their in-string escape character. Matched against the 1st syntax name (use `Scope Hunter` plugin to find one)
-  "source.ahk"   	:"`",
+{// This is a User config template, actual data is within Plugin's python code
+"q_same": ["\"", "'", "`"], // List of pair-identical quotes ('', not ‘’) to check for
+"esc"   : {""    	:"\\",    // Dictionary of Sublime Text's scope syntax names and their in-string escape character
+  "source.ahk"   	:"`" ,    // Matched against the 1st syntax name (use `Scope Hunter` plugin to find one)
   "source.python"	:"\\",
 },
-"esc_self" : {"":["",], // A dictionary of Sublime Text's scope syntax names and their in-string repeated quote escape character
-  "source.ahk.1":["\"","'"],  //e.g., "This string ends with a quote"""
+"esc_self" : {"":["",] ,    // Dictionary of Sublime Text's scope syntax names and their in-string repeated quote escape character
+  "source.ahk.1":["\"","'"],//  e.g., "This string ends with a quote"""
 },
-*/
 }
