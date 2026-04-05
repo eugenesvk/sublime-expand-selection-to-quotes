@@ -14,10 +14,10 @@
       {"caption": "-"                                    	                          	},
       {"caption":"Settings – Default+User (side-by-side)"     ,"command":"edit_settings"	,"args":{
         "base_file":"${packages}/Expand Selection to Quotes/Expand Selection To Quotes.sublime-settings",
-        "default"  :"[\n\t$0\n]",},},
+        "default"  :"{\n$0\n}",},},
       {"caption":"Key Bindings – Default+User (side-by-side)" ,"command":"edit_settings"	,"args":{
         "base_file":"${packages}/Expand Selection to Quotes/Default (${platform}).sublime-keymap",
-        "default"  :"[\n\t$0\n]",},},
+        "default"  :"[\n$0\n]",},},
       {"caption": "-"                    	                      	},
       {"caption":"Settings - Default"    	,"command":"open_file"	,"args":{"file":"${packages}/Expand Selection to Quotes/Expand Selection to Quotes.sublime-settings"},},
       {"caption":"Settings - User"       	,"command":"open_file"	,"args":{"file":"${packages}/User/Expand Selection to Quotes.sublime-settings"},},
