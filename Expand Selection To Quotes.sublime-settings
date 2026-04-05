@@ -5,7 +5,7 @@
   "source.ahk"   	:{"c":"`" , "sym":["\"","'","`", ";",":","{","n","r","b","t","s","v","a","f",]},
   "source.ahk.1" 	:{"c":"`" , "sym":["\"","'","`", ";",":","{","n","r","b","t","s","v","a","f",]},
   "source.ahk.2" 	:{"c":"`" , "sym":["\"","'","`", ";",":","{","n","r","b","t","s","v","a","f",]},
-  "source.python"	:{"c":"\\", "sym":["\"","'"]}, #ignore non quotes: \n \ a b f n N{name} r t uxxxx Uxxxxxxxx v ooo xhh
+  "source.python"	:{"c":"\\", "sym":["\"","'"]}, //ignore non quotes: \n \ a b f n N{name} r t uxxxx Uxxxxxxxx v ooo xhh
 },
 "esc_self" : {"":["",] ,    // Dictionary of Sublime Text's scope syntax names and their in-string repeated quote escape character
   "source.ahk.1":["\"","'"],//  e.g., "This string ends with a quote"""
