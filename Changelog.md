@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- 🐞 __Fixed__
+  + Quotes acting as escapes not being ignored, e.g., newline escapes in ``` "`nhello`n" ``` (limited language example only)
+
 [0.1.0]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.1.0
 ## [0.1.0]
 
