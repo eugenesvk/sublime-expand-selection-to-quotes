@@ -10,6 +10,7 @@ doc/           	export-ignore
 sample/        	export-ignore
 Contributing.md	export-ignore
 ToDo.md        	export-ignore
+2Do.md        	export-ignore
 
 # Tests
 test/    	export-ignore
