@@ -4,7 +4,7 @@
 },
 {"caption":"Preferences","id":"preferences","children":[
   {"caption":"Package Settings","mnemonic":"P","id":"package-settings","children":[
-    {"caption":"Expand Selection to Quotes","mnemonic":"Q","id":"expand-selection-to-quotes_pref","children":[
+    {"caption":"Q Expand Selection to Quotes","mnemonic":"Q","id":"expand-selection-to-quotes_pref","children":[
       {"caption":"Q Settings – Default+User"     ,"mnemonic":"Q","command":"chain"	,"args":{"commands":[
         {"command":"open_file","args":{"file":"${packages}/Expand Selection to Quotes/Expand Selection to Quotes.sublime-settings"}},
         {"command":"open_file","args":{"file":"${packages}/User/Expand Selection to Quotes.sublime-settings"}},]}},
