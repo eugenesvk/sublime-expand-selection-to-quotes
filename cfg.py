@@ -53,10 +53,16 @@ class cfgU(metaclass=Singleton):
       setU = sublime.load_settings(cfgU_settings)
       setU.clear_on_change(PACKAGE_NAME)
       setU.add_on_change  (PACKAGE_NAME, lambda: cfgU.reload())
-      for k in ['q_same','q_paired','esc_fallback','esc_self_fallback']:
-        cfgU.C[k] = setU.get(k, cfgU.C[k])
-      for k in ['esc','esc_self']: # ST settings collate/cascade ≠ .update, but replace ≝top-level keys, so no granular updates → don't use .sublime-settings within the package
-        cfgU.C[k].update(setU.get(k,dict()))
+      for k,T in {'q_same':list,'q_paired':list,'esc_fallback':dict,'esc_self_fallback':list,}.items():
+        if k in setU:
+          if type(val := setU.get(k)) is T:
+            cfgU.C[k] = val
+          else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
+      for k,T in {'esc':dict,'esc_self':dict,}.items(): # ST settings collate/cascade ≠ .update, but replace ≝top-level keys, so no granular updates → don't use .sublime-settings within the package
+        if k in setU:
+          if type(val := setU.get(k)) is T:
+            cfgU.C[k].update(val)
+          else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
     except FileNotFoundError:
       _log.info(f'‘{cfgU_settings}’ file not found')
     except Exception as e:  # pragma: no cover
