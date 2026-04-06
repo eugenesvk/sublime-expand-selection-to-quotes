@@ -9,10 +9,11 @@ _L = False #dbg
 
 class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
+		C = cfg.cfgU.C
 		view = self.view
 
 		q_all = {}
-		for q in self.q_same:
+		for q in C['q_same']:
 			q_all[q] = list(map(lambda x: x.begin(), view.find_all(q)))
 
 		def search_for_quotes(q, quotes, esc, esc_self):
@@ -90,18 +91,18 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 
 		for sel in view.sel():
 			ctx = view.scope_name(sel.a) #e.g., "source.python meta.function…"
-			ctx_source = ctx.split()          #      [source.python,meta.function,…]
+			ctx_l = ctx.split()          #      [source.python,meta.function,…]
 			esc, esc_self = None, None
-			for  ctx_i in ctx_source:         #       source.python
-				if esc      is None and ctx_i in self.esc     : esc      = self.esc     .get(ctx_i)
-				if esc_self is None and ctx_i in self.esc_self: esc_self = self.esc_self.get(ctx_i)
-			if _L: _log.debug(f"{esc}¦{esc_self} {ctx_source}")
-			if esc      is None: esc      = self.esc     ['']
-			if esc_self is None: esc_self = self.esc_self['']
-			if _L: _log.debug(f"{esc}¦{esc_self} {ctx_source}")
+			for  ctx_i in ctx_l:         #       source.python
+				if esc      is None and ctx_i in C['esc']     : esc      = C['esc']     .get(ctx_i)
+				if esc_self is None and ctx_i in C['esc_self']: esc_self = C['esc_self'].get(ctx_i)
+			if _L: _log.debug(f"{esc}¦{esc_self} {ctx_l}")
+			if esc      is None: esc      = C['esc_fallback']
+			if esc_self is None: esc_self = C['esc_self_fallback']
+			if _L: _log.debug(f"{esc}¦{esc_self} {ctx_l}")
 
 			q_res = {}
-			for q in self.q_same:
+			for q in C['q_same']:
 				sz, pre, pos = search_for_quotes(q,q_all[q], esc, esc_self)
 				q_res[sz] = (pre,pos)
 				if _L: _log.debug(f"q={q} pre={pre} pos={pos} q_all={q_all[q]}")
