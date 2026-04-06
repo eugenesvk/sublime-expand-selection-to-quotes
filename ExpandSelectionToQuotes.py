@@ -9,15 +9,16 @@ _L = False #dbg
 
 class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
+		view = self.view
 
 		q_all = {}
 		for q in self.q_same:
-			q_all[q] = list(map(lambda x: x.begin(), self.view.find_all(q)))
+			q_all[q] = list(map(lambda x: x.begin(), view.find_all(q)))
 
 		def search_for_quotes(q, quotes, esc, esc_self):
 			q_size, before, after = False, False, False
 
-			if len(quotes) - self.view.substr(sel).count('"') >= 2:
+			if len(quotes) - view.substr(sel).count('"') >= 2:
 				all_before = list(filter(lambda x: x <  sel.begin(), quotes))
 				all_after  = list(filter(lambda x: x >= sel.end  (), quotes))
 				before, after = None, None
@@ -27,7 +28,7 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 				if all_before: # Find escaped quotes and skip them
 					for  i_q in reversed(all_before):
 						if is_esc: # check if this is an escape for the next char `', not a standalone quote `
-							char_pos_q = None if (i_q + 1) >= self.view.__len__() else self.view.substr(i_q + 1)
+							char_pos_q = None if (i_q + 1) >= view.__len__() else view.substr(i_q + 1)
 							if char_pos_q and char_pos_q in esc['sym']: # not a quote, but an escape
 								continue
 						if i_q == 0: # ␂, so don't check for escape char before this
@@ -35,7 +36,7 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 							if _L: _log.debug(f'✓PRE {q} @ {before} a.k.a. ␂')
 							break
 						else:
-							char_pre_q = self.view.substr(i_q - 1)
+							char_pre_q = view.substr(i_q - 1)
 							if   char_pre_q == esc_c:
 								if _L: _log.debug(f"{esc_c}PRE q={q} @ {i_q} pre_char=¦{char_pre_q}¦")
 								continue
@@ -50,7 +51,7 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 					skip_paired = False
 					for  i_q in          all_after  :
 						if is_esc: # check if this is an escape for the next char `', not a standalone quote `
-							char_pos_q = None if (i_q + 1) >= self.view.__len__() else self.view.substr(i_q + 1)
+							char_pos_q = None if (i_q + 1) >= view.__len__() else view.substr(i_q + 1)
 							if char_pos_q and char_pos_q in esc['sym']: # not a quote, but an escape
 								continue
 
@@ -64,16 +65,14 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 							if _L: _log.debug(f'✓POS {q} @ {after} a.k.a. ␂')
 							break
 						else:
-							char_pre_q = self.view.substr(i_q - 1)
-							char_pos_q = None if (i_q+1) >= self.view.__len__() else self.view.substr(i_q + 1)
-							if _L: _log.debug(f"{i_q} ? {self.view.__len__()} char_pos_q={char_pos_q}")
+							char_pre_q = view.substr(i_q - 1)
+							char_pos_q = None if (i_q+1) >= view.__len__() else view.substr(i_q + 1)
+							if _L: _log.debug(f"{i_q} ? {view.__len__()} char_pos_q={char_pos_q}")
 							if   char_pre_q == esc_c:
 								if _L: _log.debug(f"{esc_c}POS q={q} @ {i_q} pre_char=¦{char_pre_q}¦")
-								pass
 							elif char_pos_q == q and q in esc_self: # double quote as escape
 								if _L: _log.debug(f"••₁{esc_c}POS q={q} @ {i_q} pos_char=¦{char_pos_q}¦ & {esc_self}")
 								skip_paired = True
-								pass
 							else:
 								after = i_q
 								if _L: _log.debug(f'✓POS {q} @ {after} with pre_char=¦{char_pre_q}¦')
@@ -86,11 +85,11 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 		def replace_region(start, end):
 			if sel.size() < end-start-2:
 				start += 1; end -= 1
-			self.view.sel().subtract(sel)
-			self.view.sel().add(sublime.Region(start, end))
+			view.sel().subtract(sel)
+			view.sel().add(sublime.Region(start, end))
 
-		for sel in self.view.sel():
-			ctx = self.view.scope_name(sel.a) #e.g., "source.python meta.function…"
+		for sel in view.sel():
+			ctx = view.scope_name(sel.a) #e.g., "source.python meta.function…"
 			ctx_source = ctx.split()          #      [source.python,meta.function,…]
 			esc, esc_self = None, None
 			for  ctx_i in ctx_source:         #       source.python
