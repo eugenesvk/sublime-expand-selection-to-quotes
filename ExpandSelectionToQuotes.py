@@ -1,25 +1,9 @@
 import sublime, sublime_plugin
 
-class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
-	q_same = ('"', "'", "`")
-	q_paired = (("«","»"), ("‹","›"), ("‘","’"), ("‛","’"), ("“","”"), ("‟","”"), ("„","“"), ("🙶","🙷"))
-	esc = {'':{'c':'\\', 'sym':['"',"'"]},
-		# since escape char is a quote ↓ incluce non-quotes to exclude ` from matches
-		'source.ahk'  : {'c':'`' , 'sym':['"',"'","`", ";",":","{","n","r","b","t","s","v","a","f",]},
-		'source.ahk.1': {'c':'`' , 'sym':['"',"'","`", ";",":","{","n","r","b","t","s","v","a","f",]},
-		'source.ahk.2': {'c':'`' , 'sym':['"',"'","`", ";",":","{","n","r","b","t","s","v","a","f",]},
-		'source.python':{'c':'\\', 'sym':['"',"'"]}, #ignore non quotes: \n \ a b f n N{name} r t uxxxx Uxxxxxxxx v ooo xhh
-	}
-	esc_self = {'':('',), # languages that allow repeated quotes to escape themselves
-		'source.ahk.1':('"',"'"),
-	}
+from . import cfg
 
+class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		# Official settings collate/cascade ≠ .update, but replace ≝top-level keys, so no granular updates → don't use .sublime-settings within the package
-		cfg = sublime.load_settings('Expand Selection To Quotes.sublime-settings')
-		self.q_same    = cfg.get('q_same'      	,self.q_same)
-		self.esc     .update(cfg.get('esc'     	,{}))
-		self.esc_self.update(cfg.get('esc_self'	,{}))
 
 		q_all = {}
 		for q in self.q_same:
