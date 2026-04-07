@@ -58,6 +58,7 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
       else:
         all_before   = list(filter(lambda x:  x <  sel.begin() , q_pts_beg))
         all_after    = list(filter(lambda x:  x >= sel.end  () , q_pts_end))
+      if _L: _log.debug(f"all_before = {all_before}\nall_after = {all_after}  sel={sel.end()} s={s.end()} q_pts_end={q_pts_end}  q_pt_all={q_pt_all}")
 
       # 2. Find quotes that do/are not escape(s)
       esc   = C['esc'] # constant.character.escape
