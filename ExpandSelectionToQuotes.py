@@ -13,7 +13,7 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 		view = self.view
 
 		q_pt_all = {}
-		for q in C['q_same']: # " ' `
+		for q in C['q=']: # " ' `
 			q_pt_all[q] = list(map(lambda x: x.begin(), view.find_all(q)))
 
 		def search_for_quotes(q, q_pts, txt_pt):
@@ -80,7 +80,7 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 			txt_pt = sel.b # ignore selection, only use point @ ⎀
 
 			q_res = {}
-			for q in C['q_same']: # " ' `         ↓list[sublime.Point]
+			for q in C['q=']: # " ' `         ↓list[sublime.Point]
 				sz, pre, pos = search_for_quotes(q, q_pt_all[q], txt_pt)
 				q_res[sz] = (pre,pos)
 				if _L: _log.debug(f"q={q} pre={pre} pos={pos} q_pt={q_pt_all[q]}")
