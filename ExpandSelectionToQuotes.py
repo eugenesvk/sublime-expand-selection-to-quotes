@@ -17,17 +17,34 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 			q_pt_all[q] = list(map(lambda x: x.begin(), view.find_all(q)))
 
 		def search_for_quotes(q, q_pts, txt_pt):
-			txt_scope = view.scope_name(pt) #e.g., "source.python meta.function…"
-			txt_scope_l = txt_scope.split()       #      [source.python,meta.function,…]
-			esc   = C['esc'] # constant.character.escape
-			str_e = C['str']
-
 			q_size, before, after = False, False, False
 			if len(q_pts) - view.substr(sel).count('"') < 2: # not enough pairs
 				return q_size, before, after
 
-			all_before = list(filter(lambda x: x <  sel.begin(), q_pts))
-			all_after  = list(filter(lambda x: x >= sel.end  (), q_pts))
+			# 1. Limit quotes to a string
+			txt_scope = view.scope_name(txt_pt) #e.g., "source.python meta.function…"
+
+			str_scope = None
+			for  i_str in C['str']:
+				if i_str in txt_scope: # found partial 'meta.string', find full '….python'
+					for  i_txt in reversed(txt_scope.split()): # guard: search for most specific match first
+						if i_txt.startswith(i_str):
+							str_scope = i_txt
+							break
+			all_before, all_after = None, None
+
+			if str_scope:
+				if (s := view.expand_to_scope(txt_pt, str_scope)):
+					all_before = list(filter(lambda x: (x <  sel.begin()) \
+					  and                           (x >=   s.begin()), q_pts))
+					all_after  = list(filter(lambda x: (x >= sel.end  ()) \
+					  and                           (x <=   s.end  ()), q_pts))
+			else:
+				all_before   = list(filter(lambda x:  x <  sel.begin() , q_pts))
+				all_after    = list(filter(lambda x:  x >= sel.end  () , q_pts))
+
+			# 2. Find quotes that do/are not escape(s)
+			esc   = C['esc'] # constant.character.escape
 			before, after = None, None
 			if all_before: # Find the first unescaped quote
 				for  i_q in reversed(all_before):
