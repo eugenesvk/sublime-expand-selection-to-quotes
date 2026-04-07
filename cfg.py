@@ -25,22 +25,12 @@ class Singleton(type): # doesn't deadlock: if both Class_1 and Class_2 implement
     return     cls.__shared_instance__
 
 DEF = dict()
-DEF['q_same'      ] = ('"', "'", "`")
-DEF['q_paired'    ] = (("«","»"), ("‹","›"), ("‘","’"), ("‛","’"), ("“","”"), ("‟","”"), ("„","“"), ("🙶","🙷"))
-DEF['esc_fallback'] = {'c':'\\', 'sym':['"',"'"]},
-DEF['esc'] = {
-  # since escape char is a quote ↓ incluce non-quotes to exclude ` from matches
-  'source.ahk'  : {'c':'`' , 'sym':['"',"'","`", ";",":","{","n","r","b","t","s","v","a","f",]},
-  'source.ahk.1': {'c':'`' , 'sym':['"',"'","`", ";",":","{","n","r","b","t","s","v","a","f",]},
-  'source.ahk.2': {'c':'`' , 'sym':['"',"'","`", ";",":","{","n","r","b","t","s","v","a","f",]},
-  'source.python':{'c':'\\', 'sym':['"',"'"]}, #ignore non quotes: \n \ a b f n N{name} r t uxxxx Uxxxxxxxx v ooo xhh
-}
-DEF['esc_self_fallback'] = {'':('',)}
-DEF['esc_self'] = { # languages that allow repeated quotes to escape themselves
-  'source.ahk.1':('"',"'"),
-}
-DEF['esc_scope' ] = ['constant.character.escape',] # List of scope names for quotes acting as escape chars (ignore these)
-  # esc_scope+ ¦ esc_scope-   in user config adds/removes extra scopes without fully replacing the list
+DEF['q_same'  ] = ('"', "'", "`")
+DEF['q_paired'] = (("«","»"), ("‹","›"), ("‘","’"), ("‛","’"), ("“","”"), ("‟","”"), ("„","“"), ("🙶","🙷"))
+DEF['esc'     ] = ['constant.character.escape',] # List of scope names for quotes acting as escape chars (ignore these)
+  # esc+ ¦ esc-   in user config adds/removes extra scopes without fully replacing the list
+DEF['str'     ] = ['meta.string','string.quoted.single','string.quoted.double',] # List of scope names for strings (limit quote matching to text within these)
+  # str+ ¦ str-   in user config adds/removes extra scopes without fully replacing the list
 
 import copy
 class cfgU(metaclass=Singleton):
@@ -55,24 +45,19 @@ class cfgU(metaclass=Singleton):
       setU = sublime.load_settings(cfgU_settings)
       setU.clear_on_change(PACKAGE_NAME)
       setU.add_on_change  (PACKAGE_NAME, lambda: cfgU.reload())
-      for k,T in {'q_same':list,'q_paired':list,'esc_fallback':dict,'esc_self_fallback':list,'q_same':list,'esc_scope':list,}.items():
+      for k,T in {'q_same':list,'q_paired':list,'esc':list,'str':list,}.items():
         if k in setU:
           if type(val := setU.get(k)) is T:
             cfgU.C[k] = val
           else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
-      T = list
-      if (k:='esc_scope+') in setU:
-        if type(val := setU.get(k)) is T:
-          cfgU.C[k.rstrip('+')] += val
-        else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
-      if (k:='esc_scope-') in setU:
-        if type(val := setU.get(k)) is T:
-          cfgU.C[k.rstrip('-')].remove(val)
-        else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
-      for k,T in {'esc':dict,'esc_self':dict,}.items(): # ST settings collate/cascade ≠ .update, but replace ≝top-level keys, so no granular updates → don't use .sublime-settings within the package
-        if k in setU:
-          if type(val := setU.get(k)) is T:
-            cfgU.C[k].update(val)
+      for k,T in {'esc':list,'str':list,}.items():
+        if (k_sfx:=k+'+') in setU:
+          if type(val := setU.get(k_sfx)) is T:
+            cfgU.C[k] += val
+          else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
+        if (k_sfx:=k+'-') in setU:
+          if type(val := setU.get(k_sfx)) is T:
+            cfgU.C[k].remove(val)
           else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
     except FileNotFoundError:
       _log.info(f'‘{cfgU_settings}’ file not found')
