@@ -8,18 +8,22 @@ The default keybinding (disabled to avoid conflicts) <kbd>⌃</kbd><kbd>'</kbd> 
   - `"Double quoted outer '•inner ⎀ selected•' ignored"`
   - `"•Double quoted outer 'inner string ignored' ⎀ selected•"`
 
-Also works with paired quotes `«»` `“”` `‘’` `„“`  `‟”`  `‛’` `‹›` `🙶🙷`
+Also works with ‘pair-different’ quotes: `«guillemets»` `‹›` `‘curved’` `‛’` `“”` `‟”` `„“` `🙶heavy🙷` (≝keybind disabled to avoid conflicts: <kbd>⌃</kbd><kbd>"</kbd> (<kbd>⌘</kbd><kbd>"</kbd> on macOS), see [Configure](#Configure))
+
   - `«•Double guillemet ⎀ string selected•»`
   - `“•Double fancy quotation ⎀ string selected•”`
   - `“ Double fancy quotation ‟•in⎀ner•” string selected”`
+  - `" Double fancy quotation ‟•in⎀ner•” string selected"`
 
 
-Some language-awareness built-in:
+Some language-awareness built-in — escape quotes ignored, search scope limited to strings:
 
 ```py
 a = '•Single quoted selected, \"\' esc⎀ped \'\" quotes ignored •'
 b = "•Double quoted selected, \"\' esc⎀ped \'\" quotes ignored •"
 c = '•Ignore shorter pair of →" ⎀•'  +  '"← because this is a different string'
+d = '•Ignore shorter pair of →‟ ⎀•'  +  '”← because this is a different string'
+d = ' Select …       …       →‟•⎀       •”←               the same      …     '
 ```
 
 ## Configure
@@ -37,5 +41,5 @@ c = '•Ignore shorter pair of →" ⎀•'  +  '"← because this is a differen
   - Limited language-awareness:
     - only `constant.character.escape` scope defines escape chars
     - only `meta.string` `string.quoted.single` `string.quoted.double` scopes define string limit
-    - scopes are not language-specific
+    - scopes are not language-specific (good grammars should use standard/common scope names?)
     - !configure your own and submit a PR if you find good universal options!
