@@ -16,14 +16,6 @@ b = "•Double quoted selected, \"\' esc⎀ped \'\" quotes ignored •"
 c = '•Ignore shorter pair of →" ⎀•'  +  '"← because this is a different string'
 ```
 
-## Known issues
-
-  - Limited language-awareness:
-    - only `constant.character.escape` scope defines escape chars
-    - only `meta.string` `string.quoted.single` `string.quoted.double` scopes define string limit
-    - scopes are not language-specific
-    - !configure your own and submit a PR if you find good universal options!
-
 ## Configure
 
   - Quote symbols / escape / string definition rules:
@@ -33,3 +25,11 @@ c = '•Ignore shorter pair of →" ⎀•'  +  '"← because this is a differen
   - Key bindings:
     - Run command: `Preferences: Expand Selection to Quotes Key Bindings`
     - Open menu `Preferences` • `Package Settings` • `Q̲ Expand Selection to Quotes` • `E̲ Key Bindings – Default+User` (Win: <kbd>⎇</kbd><kbd>N</kbd>, <kbd>P</kbd>, <kbd>Q</kbd>, <kbd>E</kbd>)
+
+## Known issues
+
+  - Limited language-awareness:
+    - only `constant.character.escape` scope defines escape chars
+    - only `meta.string` `string.quoted.single` `string.quoted.double` scopes define string limit
+    - scopes are not language-specific
+    - !configure your own and submit a PR if you find good universal options!
