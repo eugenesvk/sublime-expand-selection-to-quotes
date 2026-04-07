@@ -39,7 +39,7 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
       # 1. Limit quotes to a string
       txt_scope = view.scope_name(txt_pt) #e.g., "source.python meta.function…"
 
-      str_scope = None
+      str_scope = None # Find string scope to avoid jumping outside of it
       for  i_str in C['str']:
         if str_scope: break
         if i_str in txt_scope: # found partial 'meta.string', find full '….python'
@@ -47,17 +47,31 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
             if i_txt.startswith(i_str):
               str_scope = i_txt
               break
+      src_scope = None # Find source scope to avoid jumping outside of it
+      i_src = 'source.'
+      if i_src in txt_scope: # found partial 'source.', find full '….python'
+        for  i_txt in reversed(txt_scope.split()): # guard: search for most specific match first
+          if i_txt.startswith(i_src):
+            src_scope = i_txt
+            break
       all_before, all_after = None, None
 
-      if str_scope:
-        if (s := view.expand_to_scope(txt_pt, str_scope)):
-          all_before = list(filter(lambda x: (x <  sel.begin()) \
-            and                              (x >=   s.begin()), q_pts_beg))
-          all_after  = list(filter(lambda x: (x >= sel.end  ()) \
-            and                              (x <=   s.end  ()), q_pts_end))
+      lim, is_src, is_str = None, None, None
+      if  src_scope and (reg_src := view.expand_to_scope(txt_pt, src_scope)): is_src = True
+      if  str_scope and (reg_str := view.expand_to_scope(txt_pt, str_scope)): is_str = True
+      if   is_src and is_str: lim = reg_src.intersection(reg_str)
+      elif is_src           : lim = reg_src
+      elif            is_str: lim = reg_str
+      if _L: _log.debug(f"{'✓'if is_src else '✗'}src={src_scope}  {'✓'if is_str else '✗'}str={str_scope} lim={lim}")
+
+      if lim:
+        all_before = list(filter(lambda x: (x <  sel.begin()) \
+          and                              (x >= lim.begin()), q_pts_beg))
+        all_after  = list(filter(lambda x: (x >= sel.end  ()) \
+          and                              (x <= lim.end  ()), q_pts_end))
       else:
-        all_before   = list(filter(lambda x:  x <  sel.begin() , q_pts_beg))
-        all_after    = list(filter(lambda x:  x >= sel.end  () , q_pts_end))
+        all_before = list(filter(lambda x:  x <  sel.begin() , q_pts_beg))
+        all_after  = list(filter(lambda x:  x >= sel.end  () , q_pts_end))
       if _L: _log.debug(f"all_before = {all_before}\nall_after = {all_after}  sel={sel.end()} s={s.end()} q_pts_end={q_pts_end}  q_pt_all={q_pt_all}")
 
       # 2. Find quotes that do/are not escape(s)
