@@ -12,3 +12,9 @@ d = "•Double quoted selected, \"\' esc⎀ped \'\" quotes ignored •"
 e = '•Ignore shorter pair of →" ⎀•'  +  '"← because this is a different string'
 f = '•Ignore shorter pair of →‟ ⎀•'  +  '”← because this is a different string'
 g = ' Select …       …       →‟•⎀       •”←               the same      …     '
+h = '•qp=F     ignore →‟  ⎀  ” ←ignore •'
+j = ' qp=T     include→‟• ⎀ •” ←include  '
+h = ' qp=F inc=T ignore →‟  ⎀  ” ←ignore  '
+#   •                                   •
+h = ' qp=T inc=T ignore →‟  ⎀  ” ←ignore  '
+#                        •     •
