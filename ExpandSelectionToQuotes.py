@@ -12,16 +12,17 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
   def run(self, edit, qp=False, inc=False):
     C = cfg.cfgU.C
     view = self.view
+    flit = sublime.FindFlags.LITERAL
 
     q_pt_all = {}
     for q in C['q=']: # " ' `
-      q_pt_all[q] = list(map(lambda x: x.begin(), view.find_all(q)))
+      q_pt_all[q] = list(map(lambda x: x.begin(), view.find_all(q   ,flit)))
     if qp:
       for q in C['qp']: # «»  “”
         q_lbl = q if type(q) is str else ''.join(q)
         q_pt_all[q_lbl] = {
-          'beg' : list(map(lambda x: x.begin(), view.find_all(q[0]))),
-          'end' : list(map(lambda x: x.begin(), view.find_all(q[1]))),
+          'beg'   : list(map(lambda x: x.begin(), view.find_all(q[0],flit))),
+          'end'   : list(map(lambda x: x.begin(), view.find_all(q[1],flit))),
         }
 
     def search_for_quotes(q, q_pts, txt_pt, is_p=False):
