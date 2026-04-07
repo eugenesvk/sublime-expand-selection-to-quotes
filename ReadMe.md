@@ -1,12 +1,18 @@
-Expands selections to the closest containing pairs of `'single'` or `"double"` quotes or ``` `backticks` ```.
+Expands selections to the closest containing pairs of `'single'` or `"double"` quotes or ``` `backticks` ``` (user-configurable list of quotation marks).
 
-The default keybinding (disabled to avoid conflicts) <kbd>⌃</kbd><kbd>'</kbd> (<kbd>⌘</kbd><kbd>'</kbd> on macOS), see [## Configure]
+The default keybinding (disabled to avoid conflicts) <kbd>⌃</kbd><kbd>'</kbd> (<kbd>⌘</kbd><kbd>'</kbd> on macOS), see [Configure](#Configure):
 
 (`⎀` is cursor location, `•` denotes selection range, `←` `→` are reference markers)
 
   - `"•Double quoted ⎀ string selected•"`
   - `"Double quoted outer '•inner ⎀ selected•' ignored"`
   - `"•Double quoted outer 'inner string ignored' ⎀ selected•"`
+
+Also works with paired quotes `«»` `“”` `‘’` `„“`  `‟”`  `‛’` `‹›` `🙶🙷`
+  - `«•Double guillemet ⎀ string selected•»`
+  - `“•Double fancy quotation ⎀ string selected•”`
+  - `“ Double fancy quotation ‟•in⎀ner•” string selected”`
+
 
 Some language-awareness built-in:
 
