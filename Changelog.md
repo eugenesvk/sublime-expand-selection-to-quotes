@@ -16,6 +16,18 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+
+- ✨ __Added__
+  + string-awareness to limit search to valid strings only `"ignore→' " + " '←ignore"`
+  + reload user settings on update
+  + basic user settings validation on load
+  + basic (manual) 🧪tests
+- Δ __Changed__
+  + use scopes to skip escape-quotes instead of error-prone manual escape char searching
+- 🐞 __Fixed__
+  + Config typo
+  + Breaking on empty scopes in user config
+
 [0.1.2]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.1.2
 ## [0.1.2]
 
