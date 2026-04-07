@@ -1,4 +1,5 @@
 [
 // {"keys":["ctrl+'" ], "command":"expand_selection_to_quotes"},
 // {"keys":["ctrl+\""], "command":"expand_selection_to_quotes","args":{"qp":true}},
+// {"keys":["ctrl+\\"], "command":"expand_selection_to_quotes","args":{"qp":true,"inc":true}},
 ]
