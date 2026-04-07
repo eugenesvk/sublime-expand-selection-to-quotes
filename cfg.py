@@ -56,8 +56,9 @@ class cfgU(metaclass=Singleton):
             cfgU.C[k] += val
           else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
         if (k_sfx:=k+'-') in setU:
-          if type(val := setU.get(k_sfx)) is T:
-            cfgU.C[k].remove(val)
+          if type(val := setU.get(k_sfx)):
+            if val in cfgU.C[k]:
+              cfgU.C[k].remove(val)
           else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
     except FileNotFoundError:
       _log.info(f'‘{cfgU_settings}’ file not found')
