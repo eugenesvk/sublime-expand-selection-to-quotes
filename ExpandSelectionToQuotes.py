@@ -88,13 +88,15 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
           after = i_q
           if     _L: _log.debug(f'✓POS {q} @ {i_q} of {ctx_q}')
           break
-      if before is not None and after is not None: q_size = after - before
+      if before is not None and after is not None: q_size = after - (before + ql_pre)
 
       return q_size, before,after,  ql_pre,ql_pos
 
-    def replace_region(start, end):
-      if sel.size() < end-start-2:
-        start += 1; end -= 1
+    def replace_region(start, end, pre_ql,pos_ql):
+      if sel.size() < end - start - pre_ql - 1:
+        start += pre_ql; end -= 1
+      else:
+        end   += pos_ql - 1
       view.sel().subtract(sel)
       view.sel().add(sublime.Region(start, end))
 
@@ -124,6 +126,6 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
         pre_t , pos_t  = q_res[min_sz][0], q_res[min_sz][1]
         pre_ql, pos_ql = q_res[min_sz][2], q_res[min_sz][3]
         beg = pre_t     - (pre_ql if inc else 0)
-        end = pos_t + 1
+        end = pos_t + 1 + (pos_ql if inc else 0)
         replace_region(beg, end, pre_ql,pos_ql)
       if _L: _log.debug(f"min_sz={min_sz}")
