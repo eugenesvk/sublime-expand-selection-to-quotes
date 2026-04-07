@@ -1,6 +1,7 @@
 import sublime, sublime_plugin
 
 from . import cfg
+
 import logging
 DEFAULT_LOG_LEVEL = logging.WARNING
 _log = logging.getLogger(__name__)
@@ -36,9 +37,9 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 			if str_scope:
 				if (s := view.expand_to_scope(txt_pt, str_scope)):
 					all_before = list(filter(lambda x: (x <  sel.begin()) \
-					  and                           (x >=   s.begin()), q_pts))
+					  and                              (x >=   s.begin()), q_pts))
 					all_after  = list(filter(lambda x: (x >= sel.end  ()) \
-					  and                           (x <=   s.end  ()), q_pts))
+					  and                              (x <=   s.end  ()), q_pts))
 			else:
 				all_before   = list(filter(lambda x:  x <  sel.begin() , q_pts))
 				all_after    = list(filter(lambda x:  x >= sel.end  () , q_pts))
@@ -80,7 +81,7 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 			txt_pt = sel.b # ignore selection, only use point @ ⎀
 
 			q_res = {}
-			for q in C['q=']: # " ' `         ↓list[sublime.Point]
+			for q in C['q=']: # " ' `             ↓list[sublime.Point]
 				sz, pre, pos = search_for_quotes(q, q_pt_all[q], txt_pt)
 				q_res[sz] = (pre,pos)
 				if _L: _log.debug(f"q={q} pre={pre} pos={pos} q_pt={q_pt_all[q]}")
