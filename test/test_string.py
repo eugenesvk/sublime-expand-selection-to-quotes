@@ -104,7 +104,7 @@ class TestString(TestCase):
           sels.subtract(sel)
         caret = view.find('⎀',0,flit)
         sels.add(caret.begin())
-        pos = set_i[inc]; pos_valid = sorted(set(pos.replace(' ','')))
+        pos = set_i[inc]; pos_valid = sorted(set(re.sub(r'[^\d]','',pos)))
 
         lb = len(set_i['qb'])
         le = len(set_i['qe'])
