@@ -23,35 +23,33 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 			str_e = C['str']
 
 			q_size, before, after = False, False, False
+			if len(q_pts) - view.substr(sel).count('"') < 2: # not enough pairs
+				return q_size, before, after
 
-			if len(q_pts) - view.substr(sel).count('"') >= 2:
-				all_before = list(filter(lambda x: x <  sel.begin(), q_pts))
-				all_after  = list(filter(lambda x: x >= sel.end  (), q_pts))
-				before, after = None, None
-
-				if all_before: # Find the first unescaped quote
-					for  i_q in reversed(all_before):
-						ctx_q = view.scope_name(i_q) #e.g., "… constant.character.escape …"
-						for  s in esc:
-							if s in ctx_q:
-								if _L: _log.debug(f"⎋PRE {q} @ {i_q} of {s} in {ctx_q}")
-								continue
-						before = i_q
-						if     _L: _log.debug(f'✓PRE {q} @ {i_q} of {ctx_q}')
-						break
-				if all_after:
-					skip_paired = False
-					for  i_q in          all_after  :
-						ctx_q = view.scope_name(i_q) #e.g., "… constant.character.escape …"
-						for  s in esc:
-							if s in ctx_q:
-								if _L: _log.debug(f"⎋POS {q} @ {i_q} of {s} in {ctx_q}")
-								continue
-						after = i_q
-						if     _L: _log.debug(f'✓POS {q} @ {i_q} of {ctx_q}')
-						break
-
-				if before is not None and after is not None: q_size = after - before
+			all_before = list(filter(lambda x: x <  sel.begin(), q_pts))
+			all_after  = list(filter(lambda x: x >= sel.end  (), q_pts))
+			before, after = None, None
+			if all_before: # Find the first unescaped quote
+				for  i_q in reversed(all_before):
+					ctx_q = view.scope_name(i_q) #e.g., "… constant.character.escape …"
+					for  s in esc:
+						if s in ctx_q:
+							if _L: _log.debug(f"⎋PRE {q} @ {i_q} of {s} in {ctx_q}")
+							continue
+					before = i_q
+					if     _L: _log.debug(f'✓PRE {q} @ {i_q} of {ctx_q}')
+					break
+			if all_after : # Find the last unescaped quote
+				for  i_q in          all_after  :
+					ctx_q = view.scope_name(i_q) #e.g., "… constant.character.escape …"
+					for  s in esc:
+						if s in ctx_q:
+							if _L: _log.debug(f"⎋POS {q} @ {i_q} of {s} in {ctx_q}")
+							continue
+					after = i_q
+					if     _L: _log.debug(f'✓POS {q} @ {i_q} of {ctx_q}')
+					break
+			if before is not None and after is not None: q_size = after - before
 
 			return q_size, before, after
 
