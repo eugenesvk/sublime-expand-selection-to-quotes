@@ -27,10 +27,9 @@ class TestQuotePaired(TestCase):
       view.window().run_command("close_file")
 
   def setText(self, string):
+    self.view.run_command("select_all")
+    self.view.run_command("right_delete")
     self.view.run_command("insert", {"characters":string})
-
-  def getRow(self, row):
-    return self.view.substr(self.view.line(self.view.text_point(row - 1, 0)))
 
   def test_all(self):
     test_set = {
