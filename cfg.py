@@ -25,11 +25,11 @@ class Singleton(type): # doesn't deadlock: if both Class_1 and Class_2 implement
     return     cls.__shared_instance__
 
 DEF = dict()
-DEF['q_same'  ] = ('"', "'", "`")
-DEF['q_paired'] = (("«","»"), ("‹","›"), ("‘","’"), ("‛","’"), ("“","”"), ("‟","”"), ("„","“"), ("🙶","🙷"))
-DEF['esc'     ] = ['constant.character.escape',] # List of scope names for quotes acting as escape chars (ignore these)
+DEF['q=' ] = ('"', "'", "`")
+DEF['qp' ] = (("«","»"), ("‹","›"), ("‘","’"), ("‛","’"), ("“","”"), ("‟","”"), ("„","“"), ("🙶","🙷"))
+DEF['esc'] = ['constant.character.escape',] # List of scope names for quotes acting as escape chars (ignore these)
   # esc+ ¦ esc-   in user config adds/removes extra scopes without fully replacing the list
-DEF['str'     ] = ['meta.string','string.quoted.single','string.quoted.double',] # List of scope names for strings (limit quote matching to text within these)
+DEF['str'] = ['meta.string','string.quoted.single','string.quoted.double',] # List of scope names for strings (limit quote matching to text within these)
   # str+ ¦ str-   in user config adds/removes extra scopes without fully replacing the list
 
 import copy
@@ -45,7 +45,7 @@ class cfgU(metaclass=Singleton):
       setU = sublime.load_settings(cfgU_settings)
       setU.clear_on_change(PACKAGE_NAME)
       setU.add_on_change  (PACKAGE_NAME, lambda: cfgU.reload())
-      for k,T in {'q_same':list,'q_paired':list,'esc':list,'str':list,}.items():
+      for k,T in {'q='    :list,'qp':list,'esc':list,'str':list,}.items():
         if k in setU:
           if type(val := setU.get(k)) is T:
             cfgU.C[k] = val
