@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- ✨ __Added__
+  + support for paired quotes «»  “”  ‘’  „“  ‟”  ‛’  ‹›  🙶🙷
 
 [0.2.0]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.2.0
 ## [0.2.0]
