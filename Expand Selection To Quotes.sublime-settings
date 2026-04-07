@@ -1,11 +1,11 @@
-{// This is a User config template, actual data is within Plugin's python code 
+{// This is a User config template, actual data is within Plugin's python code
  // scope syntax name scheme:   sublimetext.com/docs/scope_naming.html
  //   …detection: packagecontrol.io/packages/ScopeHunter
 "q=":["\"","'","`"],// List              of pair-identical quotes ('', not ‘’) to check for
 "qp":["«»", "‹›",   // List of str/lists of pair-different quotes (‘’, not '') to check for
   "‘’", "‛’",
   "“”", "‟”", "„“",
-  ["🙶","🙷"]], // use [open close] list if opening is 2 chars or Python fails to parse 2 chars as 2
+  ["🙶","🙷"]], // use [open close] list if opening is `'2 chars or Python fails to parse 2 chars as 2
 "qp+": [], // a list to add/remove from the base (if you don't want to replace the default completely and risk missing on future improvements)
 "qp-": [],
 // List of scope names for quotes acting as escape chars (ignore these) and a list to add/remove from the base (if you don't want to replace the default completely and risk missing on future improvements)
