@@ -6,11 +6,11 @@
   ["‘","’"], ["‛","’"],
   ["“","”"], ["‟","”"], ["„","“"], ["🙶","🙷"]],
 // List of scope names for quotes acting as escape chars (ignore these) and a list to add/remove from the base (if you don't want to replace the default completely and risk missing on future improvements)
-"esc" : ["constant.character.escape",],
-"esc+": ["",], //quote.escape
-"esc-": ["",],
+"esc" : ["constant.character.escape"],
+"esc+": [], //quote.escape
+"esc-": [],
 // List of scope names for strings (limit quote matching to text within these) and a list to add/remove from the base (if you don't want to replace the default completely and risk missing on future improvements)
 "str" : ["meta.string","string.quoted.single","string.quoted.double",],
-"str+": ["",], //string.unquoted  string.quoted.triple
-"str-": ["",],
+"str+": [], //string.unquoted  string.quoted.triple
+"str-": [],
 }
