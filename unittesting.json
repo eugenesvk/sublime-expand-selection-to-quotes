@@ -1,0 +1,13 @@
+{
+"tests_dir"  	:"test",    	//tests
+//"pattern"  	:"test*.py",	//test*.py
+//"warnings" 	:"default", 	// ¹print ²matching warnings
+ //          	≝ default   	       ¹ 1st occurrence of ² for each location (module + line number) where the warning is issued
+ //          	  module    	       ¹ 1st …          of ² for each module where the warning is issued (regardless of line number)
+ //          	  once      	only   ¹ 1st …          of ², regardless of location
+ //          	  ignore    	never  ¹                   ²
+ //          	  always    	always ¹                   ²
+ //          	  error     	turn                       ² into exceptions
+//"verbosity"	: 1,        	//2
+"coverage"   	: true,     	//F track test case coverage
+}
