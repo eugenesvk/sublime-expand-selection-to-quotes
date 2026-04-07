@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file
 
-[unreleased]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/compare/0.1.2...HEAD
+[unreleased]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/compare/0.2.0...HEAD
 ## [Unreleased]
 <!-- - ✨ __Added__ -->
   <!-- + new features -->
@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+
+[0.2.0]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.2.0
+## [0.2.0]
 
 - ✨ __Added__
   + string-awareness to limit search to valid strings only `"ignore→' " + " '←ignore"`
