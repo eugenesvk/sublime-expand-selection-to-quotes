@@ -1,3 +1,4 @@
 [
-// {"keys":["super+'"], "command":"expand_selection_to_quotes"}
+// {"keys":["super+'" ], "command":"expand_selection_to_quotes"},
+// {"keys":["super+\""], "command":"expand_selection_to_quotes","args":{"qp":true}},
 ]
