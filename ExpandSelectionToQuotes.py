@@ -111,7 +111,7 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
           q_lbl = q if type(q) is str else ''.join(q)
           sz, pre,pos,  ql_pre,ql_pos = search_for_quotes(q, q_pt_all[q_lbl], txt_pt, is_p=True)
           q_res[sz] = (pre,pos,  ql_pre,ql_pos)
-          if _L: _log.debug(f"q={q} pre={pre} pos={pos} q_pt={q_pt_all[q]}")
+          if _L: _log.debug(f"q={q} pre={pre} pos={pos} q_pt={q_pt_all[q_lbl]} sz={sz}¦{ql_pre}¦{ql_pos}")
 
       min_sz = None
       for sz in q_res: # find the nearest quotes…
