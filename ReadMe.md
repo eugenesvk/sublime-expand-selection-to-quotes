@@ -15,7 +15,7 @@ Supports ‘pair-different’ quotes via a `qp` command argument: `«guillemets�
   - `“ Double fancy quotation ‟•in⎀ner•” string selected”`
   - `" Double fancy quotation ‟•in⎀ner•” string selected"`
 
-Can select quotes if called with an `inc` command argument
+Can select quotes if called with an `inc` command argument (without one running the command twice expands to quotes)
   ```py
     "Double quotes inc=true"
   # •                      •
