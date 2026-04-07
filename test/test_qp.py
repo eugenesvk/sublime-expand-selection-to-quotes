@@ -1,3 +1,5 @@
+# Install `UnitTesting`
+# Run `UnitTesting: Test Current File`/`Package`
 import os, re
 from unittest import TestCase
 
