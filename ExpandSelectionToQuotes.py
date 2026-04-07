@@ -12,72 +12,44 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 		C = cfg.cfgU.C
 		view = self.view
 
-		q_all = {}
-		for q in C['q_same']:
-			q_all[q] = list(map(lambda x: x.begin(), view.find_all(q)))
+		q_pt_all = {}
+		for q in C['q_same']: # " ' `
+			q_pt_all[q] = list(map(lambda x: x.begin(), view.find_all(q)))
 
-		def search_for_quotes(q, quotes, esc, esc_self):
+		def search_for_quotes(q, q_pts, txt_pt):
+			txt_scope = view.scope_name(pt) #e.g., "source.python meta.function…"
+			txt_scope_l = txt_scope.split()       #      [source.python,meta.function,…]
+			esc   = C['esc'] # constant.character.escape
+			str_e = C['str']
+
 			q_size, before, after = False, False, False
 
-			if len(quotes) - view.substr(sel).count('"') >= 2:
-				all_before = list(filter(lambda x: x <  sel.begin(), quotes))
-				all_after  = list(filter(lambda x: x >= sel.end  (), quotes))
+			if len(q_pts) - view.substr(sel).count('"') >= 2:
+				all_before = list(filter(lambda x: x <  sel.begin(), q_pts))
+				all_after  = list(filter(lambda x: x >= sel.end  (), q_pts))
 				before, after = None, None
-				esc_c = esc['c'  ] # {c: \    sym: " '}
-				is_esc = True if q == esc_c else False # single quote can act as an escape
 
-				if all_before: # Find escaped quotes and skip them
+				if all_before: # Find the first unescaped quote
 					for  i_q in reversed(all_before):
-						if is_esc: # check if this is an escape for the next char `', not a standalone quote `
-							char_pos_q = None if (i_q + 1) >= view.__len__() else view.substr(i_q + 1)
-							if char_pos_q and char_pos_q in esc['sym']: # not a quote, but an escape
+						ctx_q = view.scope_name(i_q) #e.g., "… constant.character.escape …"
+						for  s in esc:
+							if s in ctx_q:
+								if _L: _log.debug(f"⎋PRE {q} @ {i_q} of {s} in {ctx_q}")
 								continue
-						if i_q == 0: # ␂, so don't check for escape char before this
-							before = i_q
-							if _L: _log.debug(f'✓PRE {q} @ {before} a.k.a. ␂')
-							break
-						else:
-							char_pre_q = view.substr(i_q - 1)
-							if   char_pre_q == esc_c:
-								if _L: _log.debug(f"{esc_c}PRE q={q} @ {i_q} pre_char=¦{char_pre_q}¦")
-								continue
-							elif char_pre_q == q and q in esc_self:
-								if _L: _log.debug(f"••{esc_c}PRE q={q} @ {i_q} pre_char=¦{char_pre_q}¦")
-								continue
-							else:
-								before = i_q
-								if _L: _log.debug(f'✓PRE {q} @ {before} with pre_char=¦{char_pre_q}¦')
-								break
+						before = i_q
+						if     _L: _log.debug(f'✓PRE {q} @ {i_q} of {ctx_q}')
+						break
 				if all_after:
 					skip_paired = False
 					for  i_q in          all_after  :
-						if is_esc: # check if this is an escape for the next char `', not a standalone quote `
-							char_pos_q = None if (i_q + 1) >= view.__len__() else view.substr(i_q + 1)
-							if char_pos_q and char_pos_q in esc['sym']: # not a quote, but an escape
+						ctx_q = view.scope_name(i_q) #e.g., "… constant.character.escape …"
+						for  s in esc:
+							if s in ctx_q:
+								if _L: _log.debug(f"⎋POS {q} @ {i_q} of {s} in {ctx_q}")
 								continue
-
-						if skip_paired:
-							skip_paired = False
-							if _L: _log.debug(f"••₂{esc_c}POS q={q} @ {i_q} & {esc_self}")
-							continue
-
-						if i_q == 0: # shouldn't happen, but just in case
-							after = i_q
-							if _L: _log.debug(f'✓POS {q} @ {after} a.k.a. ␂')
-							break
-						else:
-							char_pre_q = view.substr(i_q - 1)
-							char_pos_q = None if (i_q+1) >= view.__len__() else view.substr(i_q + 1)
-							if _L: _log.debug(f"{i_q} ? {view.__len__()} char_pos_q={char_pos_q}")
-							if   char_pre_q == esc_c:
-								if _L: _log.debug(f"{esc_c}POS q={q} @ {i_q} pre_char=¦{char_pre_q}¦")
-							elif char_pos_q == q and q in esc_self: # double quote as escape
-								if _L: _log.debug(f"••₁{esc_c}POS q={q} @ {i_q} pos_char=¦{char_pos_q}¦ & {esc_self}")
-								skip_paired = True
-							else:
-								after = i_q
-								if _L: _log.debug(f'✓POS {q} @ {after} with pre_char=¦{char_pre_q}¦')
-								break
+						after = i_q
+						if     _L: _log.debug(f'✓POS {q} @ {i_q} of {ctx_q}')
+						break
 
 				if before is not None and after is not None: q_size = after - before
 
@@ -90,22 +62,13 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 			view.sel().add(sublime.Region(start, end))
 
 		for sel in view.sel():
-			ctx = view.scope_name(sel.a) #e.g., "source.python meta.function…"
-			ctx_l = ctx.split()          #      [source.python,meta.function,…]
-			esc, esc_self = None, None
-			for  ctx_i in ctx_l:         #       source.python
-				if esc      is None and ctx_i in C['esc']     : esc      = C['esc']     .get(ctx_i)
-				if esc_self is None and ctx_i in C['esc_self']: esc_self = C['esc_self'].get(ctx_i)
-			if _L: _log.debug(f"{esc}¦{esc_self} {ctx_l}")
-			if esc      is None: esc      = C['esc_fallback']
-			if esc_self is None: esc_self = C['esc_self_fallback']
-			if _L: _log.debug(f"{esc}¦{esc_self} {ctx_l}")
+			txt_pt = sel.b # ignore selection, only use point @ ⎀
 
 			q_res = {}
-			for q in C['q_same']:
-				sz, pre, pos = search_for_quotes(q,q_all[q], esc, esc_self)
+			for q in C['q_same']: # " ' `         ↓list[sublime.Point]
+				sz, pre, pos = search_for_quotes(q, q_pt_all[q], txt_pt)
 				q_res[sz] = (pre,pos)
-				if _L: _log.debug(f"q={q} pre={pre} pos={pos} q_all={q_all[q]}")
+				if _L: _log.debug(f"q={q} pre={pre} pos={pos} q_pt={q_pt_all[q]}")
 
 			min_sz = None
 			for sz in q_res: # find the nearest quotes…
