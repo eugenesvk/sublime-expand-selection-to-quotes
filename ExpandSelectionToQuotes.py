@@ -52,7 +52,7 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 					is_esc = False
 					ctx_q = view.scope_name(i_q) #e.g., "… constant.character.escape …"
 					for  s in esc:
-						if s in ctx_q:
+						if s and s in ctx_q: # guards against empty scopes
 							is_esc = True
 							if _L: _log.debug(f"⎋PRE {q} @ {i_q} of {s} in {ctx_q}")
 							break
@@ -65,7 +65,7 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 					is_esc = False
 					ctx_q = view.scope_name(i_q) #e.g., "… constant.character.escape …"
 					for  s in esc:
-						if s in ctx_q:
+						if s and s in ctx_q: # guards against empty scopes
 							is_esc = True
 							if _L: _log.debug(f"⎋POS {q} @ {i_q} of {s} in {ctx_q}")
 							continue
