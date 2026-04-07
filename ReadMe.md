@@ -43,3 +43,4 @@ d = ' Select …       …       →‟•⎀       •”←               the 
     - only `meta.string` `string.quoted.single` `string.quoted.double` scopes define string limit
     - scopes are not language-specific (good grammars should use standard/common scope names?)
     - !configure your own and submit a PR if you find good universal options!
+  - Not all variants of ‘pair-different’ quotes are included due to _potential_ conflicts: `„“` but not `„”`. Add the missing ones to your config, exclude the ones you don't need, submit a PR (and tests) if the potential for conflict is only imaginary
