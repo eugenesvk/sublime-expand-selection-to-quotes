@@ -34,8 +34,8 @@ class TestString(TestCase):
     cfg = sublime.load_settings("Preferences.sublime-settings")
     cfg.set("close_windows_when_empty", False)
     cfgU = sublime.load_settings(cfgU_settings)
-    cfg.set("q=", ["\"","'"])
-    cfg.set("qp", [
+    cfgU.set("q=", ["\"","'","`"])
+    cfgU.set("qp", [
       "«»", "‹›",
       "‘’", "‛’",
       "“”", "‟”", "„“",
