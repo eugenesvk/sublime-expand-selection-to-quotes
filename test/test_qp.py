@@ -36,20 +36,20 @@ class TestQuotePaired(TestCase):
     test_set = {
       'b1=e1' : {
         'txt' :R'''"aaa'____'⎀'____'aaaa"''',  'qb': "'", 'qe': "'", 'qp':False,
-        False :   " ⁵  ⁴³   ²¹²   ³⁴   ⁵ "  ,
-        True  :   "³   ²    ¹ ¹    ²    ³"  ,  },
+        False :   " 5  43   212   34   5 "  ,
+        True  :   "3   2    1 1    2    3"  ,  },
       'b2≠e1' : {
         'txt' :R'''"aa`'___`'⎀'____'aaaa"''',  'qb':"`'", 'qe': "'", 'qp':True ,
-        False :   " ⁵ ⁴ ³  ² ¹²   ³⁴   ⁵ "  ,
-        True  :   "³  ²    ¹  ¹    ²    ³"  ,  },
+        False :   " 5 4 3  2 12   34   5 "  ,
+        True  :   "3  2    1  1    2    3"  ,  },
       'b1≠e2' : {
         'txt' :R'''"aaa'____'⎀`'___`'aaa"''',  'qb': "'", 'qe':"`'", 'qp':True ,
-        False :   " ⁵  ⁴³   ²¹ ²  ³ ⁴  ⁵ "  ,
-        True  :   "³   ²    ¹  ¹    ²   ³"  ,  },
+        False :   " 5  43   21 2  3 4  5 "  ,
+        True  :   "3   2    1  1    2   3"  ,  },
       'b2≠e2' : {
         'txt' :R'''"aa¦+___¦+⎀+¦___+¦aaa"''',  'qb':"¦+", 'qe':"+¦", 'qp':True ,
-        False :   " ⁵ ⁴ ³  ² ¹ ²  ³ ⁴  ⁵ "  ,
-        True  :   "³  ²    ¹   ¹    ²   ³"  ,  },
+        False :   " 5 4 3  2 1 2  3 4  5 "  ,
+        True  :   "3  2    1   1    2   3"  ,  },
     }
     view = self.view
     sels = view.sel()
@@ -64,12 +64,11 @@ class TestQuotePaired(TestCase):
           sels.subtract(sel)
         caret = view.find('⎀',0,flit)
         sels.add(caret.begin())
-        pos = set_i[inc]; pos_valid = set(pos.replace(' ',''))
+        pos = set_i[inc]; pos_valid = sorted(set(pos.replace(' ','')))
 
         lb = len(set_i['qb'])
         le = len(set_i['qe'])
-        for pos_i in '¹²³⁴⁵':
-          if not pos_i in pos_valid: continue
+        for pos_i in pos_valid:
           view.run_command("expand_selection_to_quotes",{"qp":set_i['qp'],"inc":inc})
           m_i = [m.start() for m in re.finditer(pos_i, pos)]
           beg   =  m_i[0]        ; end   = (beg if len(m_i) == 1 else m_i[1]) + le
