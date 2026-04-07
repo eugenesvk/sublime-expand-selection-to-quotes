@@ -40,6 +40,7 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 
       str_scope = None
       for  i_str in C['str']:
+        if str_scope: break
         if i_str in txt_scope: # found partial 'meta.string', find full '….python'
           for  i_txt in reversed(txt_scope.split()): # guard: search for most specific match first
             if i_txt.startswith(i_str):
@@ -81,7 +82,7 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
             if s and s in ctx_q: # guards against empty scopes
               is_esc = True
               if _L: _log.debug(f"⎋POS {q} @ {i_q} of {s} in {ctx_q}")
-              continue
+              break
           if is_esc: continue
           after = i_q
           if     _L: _log.debug(f'✓POS {q} @ {i_q} of {ctx_q}')
