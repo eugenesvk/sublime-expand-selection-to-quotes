@@ -39,6 +39,8 @@ DEF['esc_self_fallback'] = {'':('',)}
 DEF['esc_self'] = { # languages that allow repeated quotes to escape themselves
   'source.ahk.1':('"',"'"),
 }
+DEF['esc_scope' ] = ['constant.character.escape',] # List of scope names for quotes acting as escape chars (ignore these)
+  # esc_scope+ ¦ esc_scope-   in user config adds/removes extra scopes without fully replacing the list
 
 import copy
 class cfgU(metaclass=Singleton):
@@ -53,11 +55,20 @@ class cfgU(metaclass=Singleton):
       setU = sublime.load_settings(cfgU_settings)
       setU.clear_on_change(PACKAGE_NAME)
       setU.add_on_change  (PACKAGE_NAME, lambda: cfgU.reload())
-      for k,T in {'q_same':list,'q_paired':list,'esc_fallback':dict,'esc_self_fallback':list,}.items():
+      for k,T in {'q_same':list,'q_paired':list,'esc_fallback':dict,'esc_self_fallback':list,'q_same':list,'esc_scope':list,}.items():
         if k in setU:
           if type(val := setU.get(k)) is T:
             cfgU.C[k] = val
           else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
+      T = list
+      if (k:='esc_scope+') in setU:
+        if type(val := setU.get(k)) is T:
+          cfgU.C[k.rstrip('+')] += val
+        else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
+      if (k:='esc_scope-') in setU:
+        if type(val := setU.get(k)) is T:
+          cfgU.C[k.rstrip('-')].remove(val)
+        else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
       for k,T in {'esc':dict,'esc_self':dict,}.items(): # ST settings collate/cascade ≠ .update, but replace ≝top-level keys, so no granular updates → don't use .sublime-settings within the package
         if k in setU:
           if type(val := setU.get(k)) is T:
