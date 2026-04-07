@@ -49,21 +49,27 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
 			before, after = None, None
 			if all_before: # Find the first unescaped quote
 				for  i_q in reversed(all_before):
+					is_esc = False
 					ctx_q = view.scope_name(i_q) #e.g., "… constant.character.escape …"
 					for  s in esc:
 						if s in ctx_q:
+							is_esc = True
 							if _L: _log.debug(f"⎋PRE {q} @ {i_q} of {s} in {ctx_q}")
-							continue
+							break
+					if is_esc: continue
 					before = i_q
 					if     _L: _log.debug(f'✓PRE {q} @ {i_q} of {ctx_q}')
 					break
 			if all_after : # Find the last unescaped quote
 				for  i_q in          all_after  :
+					is_esc = False
 					ctx_q = view.scope_name(i_q) #e.g., "… constant.character.escape …"
 					for  s in esc:
 						if s in ctx_q:
+							is_esc = True
 							if _L: _log.debug(f"⎋POS {q} @ {i_q} of {s} in {ctx_q}")
 							continue
+					if is_esc: continue
 					after = i_q
 					if     _L: _log.debug(f'✓POS {q} @ {i_q} of {ctx_q}')
 					break
