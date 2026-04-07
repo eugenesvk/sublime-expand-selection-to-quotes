@@ -18,6 +18,14 @@ except Exception as e:  # pragma: no cover
 def plugin_loaded():
   _e_load = None 
 
+  # global package
+  # package_path = os.path.dirname (os.path.abspath(__spec__.origin))
+  # if   os.path.isfile(package_path): # Package is a .sublime-package, so get its filename
+  #   package, _ = os.path.splitext(os.path.basename(package_path))
+  # elif os.path.isdir( package_path): # Package is a dir             , so get its basename
+  #   package = os.path.basename(package_path)
+  # on_settings_change(__name__, lambda: colors.clear())
+
   try:
     cfg.cfgU.load()
   except Exception as e:
