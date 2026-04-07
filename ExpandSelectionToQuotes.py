@@ -16,6 +16,13 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
     q_pt_all = {}
     for q in C['q=']: # " ' `
       q_pt_all[q] = list(map(lambda x: x.begin(), view.find_all(q)))
+    if qp:
+      for q in C['qp']: # «»  “”
+        q_lbl = q if type(q) is str else ''.join(q)
+        q_pt_all[q_lbl] = {
+          'beg' : list(map(lambda x: x.begin(), view.find_all(q[0]))),
+          'end' : list(map(lambda x: x.begin(), view.find_all(q[1]))),
+        }
 
     def search_for_quotes(q, q_pts, txt_pt, is_p=False):
       q_size, before,after = False, False, False
@@ -97,6 +104,12 @@ class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
         sz, pre,pos,  ql_pre,ql_pos = search_for_quotes(q, q_pt_all[q], txt_pt, is_p=False)
         q_res[sz] = (pre,pos,  ql_pre,ql_pos)
         if _L: _log.debug(f"q={q} pre={pre} pos={pos} q_pt={q_pt_all[q]}")
+      if qp:
+        for q in C['qp']: # «»  “”
+          q_lbl = q if type(q) is str else ''.join(q)
+          sz, pre,pos,  ql_pre,ql_pos = search_for_quotes(q, q_pt_all[q_lbl], txt_pt, is_p=True)
+          q_res[sz] = (pre,pos,  ql_pre,ql_pos)
+          if _L: _log.debug(f"q={q} pre={pre} pos={pos} q_pt={q_pt_all[q]}")
 
       min_sz = None
       for sz in q_res: # find the nearest quotes…
