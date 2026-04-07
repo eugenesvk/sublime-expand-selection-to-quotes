@@ -2,37 +2,34 @@ Expands selections to the closest containing pairs of `'single'` or `"double"` q
 
 The default keybinding (disabled to avoid conflicts) <kbd>⌃</kbd><kbd>'</kbd> (<kbd>⌘</kbd><kbd>'</kbd> on macOS), see [## Configure]
 
-(`⎀` is cursor location, `←` `→` is first/last selected characters)
+(`⎀` is cursor location, `•` denotes selection range, `←` `→` are reference markers)
 
-  - `"←Double quoted ⎀ string selected→"`
-  - `"Double quoted outer '←inner ⎀ selected→' ignored"`
-  - `"←Double quoted outer 'inner string ignored' ⎀ selected→"`
+  - `"•Double quoted ⎀ string selected•"`
+  - `"Double quoted outer '•inner ⎀ selected•' ignored"`
+  - `"•Double quoted outer 'inner string ignored' ⎀ selected•"`
 
 Some language-awareness built-in:
 
 ```py
-a = '←Single quoted selected, \"\' esc⎀ped \'\" quotes ignored →'
-b = "←Double quoted selected, \"\' esc⎀ped \'\" quotes ignored →"
+a = '•Single quoted selected, \"\' esc⎀ped \'\" quotes ignored •'
+b = "•Double quoted selected, \"\' esc⎀ped \'\" quotes ignored •"
+c = '•Ignore shorter pair of →" ⎀•'  +  '"← because this is a different string'
 ```
 
 ## Known issues
 
   - Limited language-awareness:
-    - Only 1 `\`esc / 1 non-`\`esc language included as an example, the rest are configured to use `\` and escape `' "`, though it's user configurable (PRs to include more languages are welcome!)
-    - Requires precise scope name matching, so if some syntax defines AutoHotkey as `source.ahk.1` or `source.ahk.2` depending on its version, user config must include the versioned scope, and if other tools define it as a generic `source.ahk`, user config must also include this general version
-
-  - No string-awareness, so separation of strings is ignored:
-```py
-a = 'This \' is ignored, but this is not "← ⎀'  +  '→" '
-```
-Since the first `'string'` is not parsed as single text object, and the `"inner quotes"` are shorter than the `'outer'` ones
-
+    - only `constant.character.escape` scope defines escape chars
+    - only `meta.string` `string.quoted.single` `string.quoted.double` scopes define string limit
+    - scopes are not language-specific
+    - !configure your own and submit a PR if you find good universal options!
 
 ## Configure
 
-  - Language-specific escape rules:
+  - Quote symbols / escape / string definition rules:
     - Run command: `Preferences: Expand Selection to Quotes`
-    - Open menu: `Preferences` → `Package Settings` → `Q̲ Expand Selection to Quotes` → `Q̲ Settings – Default+User` (Win: <kbd>⎇</kbd><kbd>N</kbd>, <kbd>P</kbd>, <kbd>Q</kbd>, <kbd>Q</kbd>)
+    - Open menu: `Preferences` • `Package Settings` • `Q̲ Expand Selection to Quotes` • `Q̲ Settings – Default+User` (Win: <kbd>⎇</kbd><kbd>N</kbd>, <kbd>P</kbd>, <kbd>Q</kbd>, <kbd>Q</kbd>)
+    - Copy the opened default `Expand Selection to Quotes.sublime-settings` template to your config and follow its instructions
   - Key bindings:
     - Run command: `Preferences: Expand Selection to Quotes Key Bindings`
-    - Open menu `Preferences` → `Package Settings` → `Q̲ Expand Selection to Quotes` → `E̲ Key Bindings – Default+User` (Win: <kbd>⎇</kbd><kbd>N</kbd>, <kbd>P</kbd>, <kbd>Q</kbd>, <kbd>E</kbd>)
+    - Open menu `Preferences` • `Package Settings` • `Q̲ Expand Selection to Quotes` • `E̲ Key Bindings – Default+User` (Win: <kbd>⎇</kbd><kbd>N</kbd>, <kbd>P</kbd>, <kbd>Q</kbd>, <kbd>E</kbd>)
