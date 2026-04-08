@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file
 
-[unreleased]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/compare/0.3.4...HEAD
+[unreleased]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/compare/0.3.5...HEAD
 ## [Unreleased]
 <!-- - ✨ __Added__ -->
   <!-- + new features -->
@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+
+[0.3.5]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.3.5
+## [0.3.5]
 - 🐞 __Fixed__
   + dedupe quote counting when one pair is within the other: ``` `' ' ``` when counting closing `'` will include the opening since it's part of it
 
