@@ -38,12 +38,15 @@ class ExpandSelectionToQuotesAtomicCommand(sublime_plugin.TextCommand):
       q_pts_beg = q_pts['beg'] if is_p else q_pts
       q_pts_end = q_pts['end'] if is_p else q_pts
       count_q  = len(q_pts_beg) + (len(q_pts_end) if is_p else 0)
-      count_qq = 0 # pairs of quotes within the selection
+      count_qq = 0 # number of quotes within the selection
       if q0 == q1:
         count_qq = view.substr(sel).count(q0)
       else:
         sel_s = view.substr(sel)
-        count_qq = sel_s.count(q0) + sel_s.count(q1)
+        q0_cnt = sel_s.count(q0);  q1_cnt = sel_s.count(q1)
+        if q1 in q0: q1_cnt -= q0_cnt  #`'  '  then matching q1' counted all q0`'
+        if q0 in q1: q0_cnt -= q1_cnt  # ' `'  then matching q0' counted all q1`'
+        count_qq = q0_cnt + q1_cnt
       if count_q - count_qq < 2: # not enough pairs
         return q_size, before,after,  ql_pre,ql_pos
 
