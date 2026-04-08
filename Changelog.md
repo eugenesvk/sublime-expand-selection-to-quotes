@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file
 
-[unreleased]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/compare/0.3.2...HEAD
+[unreleased]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/compare/0.3.3...HEAD
 ## [Unreleased]
 <!-- - ✨ __Added__ -->
   <!-- + new features -->
@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+
+[0.3.3]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.3.3
+## [0.3.3]
 - 🐞 __Fixed__
   + remove hardcoded `"` and use custom one to calculate number of paired quotes within/outside the selected area
 
