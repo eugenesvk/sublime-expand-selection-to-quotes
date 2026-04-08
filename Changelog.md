@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- 🐞 __Fixed__
+  + dedupe quote counting when one pair is within the other: ``` `' ' ``` when counting closing `'` will include the opening since it's part of it
+
 [0.3.4]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.3.4
 ## [0.3.4]
 - ✨ __Added__
