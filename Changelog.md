@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- ✨ __Added__
+  + granular undo for a sequence of selection extension commands
+
 [0.3.1]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.3.1
 ## [0.3.1]
 - ✨ __Added__
