@@ -58,6 +58,14 @@ class ExpandSelectionToQuotesAtomicCommand(sublime_plugin.TextCommand):
             if i_txt.startswith(i_str):
               str_scope = i_txt
               break
+      cmt_scope = None # Find comment scope to avoid jumping outside of it
+      for  i_cmt in C['cmt']:
+        if cmt_scope: break
+        if i_cmt in txt_scope: # found partial 'comment.line', find full '….number-sign.python'
+          for  i_txt in reversed(txt_scope.split()): # guard: search for most specific match first
+            if i_txt.startswith(i_cmt):
+              cmt_scope = i_txt
+              break
       src_scope = None # Find source scope to avoid jumping outside of it
       i_src = 'source.'
       if i_src in txt_scope: # found partial 'source.', find full '….python'
@@ -67,13 +75,14 @@ class ExpandSelectionToQuotesAtomicCommand(sublime_plugin.TextCommand):
             break
       all_before, all_after = None, None
 
-      lim, is_src, is_str = None, None, None
+      lim, is_src, is_str, is_cmt = None, None, None, None
       if  src_scope and (reg_src := view.expand_to_scope(txt_pt, src_scope)): is_src = True
       if  str_scope and (reg_str := view.expand_to_scope(txt_pt, str_scope)): is_str = True
-      if   is_src and is_str: lim = reg_src.intersection(reg_str)
-      elif is_src           : lim = reg_src
-      elif            is_str: lim = reg_str
-      if _L: _log.debug(f"{'✓'if is_src else '✗'}src={src_scope}  {'✓'if is_str else '✗'}str={str_scope} lim={lim}")
+      if  cmt_scope and (reg_cmt := view.expand_to_scope(txt_pt, cmt_scope)): is_cmt = True
+      if is_src: lim =                  reg_src
+      if is_str: lim = lim.intersection(reg_str) if lim else reg_str
+      if is_cmt: lim = lim.intersection(reg_cmt) if lim else reg_cmt
+      if _L: _log.debug(f"{'✓'if is_src else '✗'}src={src_scope}  {'✓'if is_str else '✗'}str={str_scope} {'✓'if is_cmt else '✗'}cmt={cmt_scope} lim={lim}")
 
       if lim:
         all_before = list(filter(lambda x: (x <  sel.begin()) \
