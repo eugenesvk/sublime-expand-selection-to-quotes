@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file
 
-[unreleased]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/compare/0.3.1...HEAD
+[unreleased]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/compare/0.3.2...HEAD
 ## [Unreleased]
 <!-- - ✨ __Added__ -->
   <!-- + new features -->
@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+[0.3.2]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.3.2
+## [0.3.2]
 - ✨ __Added__
   + granular undo for a sequence of selection extension commands
 
