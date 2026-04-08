@@ -9,6 +9,12 @@ _log.setLevel(DEFAULT_LOG_LEVEL)
 _L = False #dbg
 
 class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
+  def run(self, edit, qp=False, inc=False): # ↓ enable soft-undo
+    sublime.set_timeout(lambda: self.view.run_command('expand_selection_to_quotes_atomic',
+      {"qp":qp, "inc": inc}),
+      0) # delay
+
+class ExpandSelectionToQuotesAtomicCommand(sublime_plugin.TextCommand):
   def run(self, edit, qp=False, inc=False):
     C = cfg.cfgU.C
     view = self.view
