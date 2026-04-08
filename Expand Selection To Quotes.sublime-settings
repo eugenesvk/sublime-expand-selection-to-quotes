@@ -14,4 +14,7 @@
 
 // List of scope names for strings (don't match quotes outside them) and lists to +add/-remove from the base
 "str":["meta.string","string.quoted.single","string.quoted.double"],   "str+":[], "str-":[],  //string.unquoted  string.quoted.triple
+
+// List of scope names for comments (don't match quotes outside them) and lists to +add/-remove from the base
+"cmt":["comment.line","comment.block"],  "cmt+":[], "cmt-":[],
 }
