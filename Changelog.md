@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- 🐞 __Fixed__
+  + remove hardcoded `"` and use custom one to calculate number of paired quotes within/outside the selected area
+
 [0.3.2]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.3.2
 ## [0.3.2]
 - ✨ __Added__
