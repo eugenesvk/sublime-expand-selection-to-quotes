@@ -31,6 +31,14 @@ d = '•Ignore shorter pair of →‟ ⎀•'  +  '”← because this is a diff
 d = ' Select …       …       →‟•⎀       •”←               the same      …     '
 ```
 
+Likewise, you can add similar behavior to custom scopes, e.g., not break out of line comments:
+
+```py
+# requires user config modification:  "str+":["comment.line"]
+a = "Hello don't break" #⎀'←do NOT break outside the comment scope'…
+  # …to match ↑
+```
+
 ## Configure
 
   - Quote symbols / escape / string definition rules:
