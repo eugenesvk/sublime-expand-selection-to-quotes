@@ -21,7 +21,7 @@ class TestString(TestCase):
     cfg.set("close_windows_when_empty", False)
     cfgU = sublime.load_settings(cfgU_settings)
     cfgU.set("q=", ["\"","'","`"])
-    cfgU.set("str+", ["comment.line"]), # comment.line
+    cfgU.set("cmt+",["comment.line"]),
     cfgU.set("qp", [
       "«»", "‹›",
       "‘’", "‛’",
