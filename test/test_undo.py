@@ -15,7 +15,7 @@ version = sublime.version()
 class TestUndo(DeferrableViewTestCase):
   def setUp(self):
     # self.view = sublime.active_window().new_file(syntax='Python.sublime-syntax') # Flashes with async tests
-    (self.view,self.vin) = sublime.active_window().create_io_panel(name=PACKAGE_NAME, on_input=None, unlisted=True)
+    self.view = sublime.active_window().create_output_panel(name=PACKAGE_NAME, unlisted=True)
     self.view.assign_syntax('Python.sublime-syntax')
     self.view.set_scratch(True)
     cfg = sublime.load_settings("Preferences.sublime-settings")
