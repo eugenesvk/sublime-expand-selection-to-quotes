@@ -80,7 +80,7 @@ class TestString(TestCase):
         lb = len(set_i['qb'])
         le = len(set_i['qe'])
         for pos_i in pos_valid:
-          view.run_command("expand_selection_to_quotes",{"qp":set_i['qp'],"inc":inc})
+          view.run_command("expand_selection_to_quotes_atomic",{"qp":set_i['qp'],"inc":inc})
           m_i = [m.start() for m in re.finditer(pos_i, pos, re.M)]
           beg   =  m_i[0]        ; end   = (beg if len(m_i) == 1 else m_i[1]) + (0 if set_i['is_fail'] else 1)
           beg_s = sels[0].begin(); end_s = sels[0].end()
