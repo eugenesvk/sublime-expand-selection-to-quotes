@@ -33,13 +33,18 @@ class ExpandSelectionToQuotesAtomicCommand(sublime_plugin.TextCommand):
 
     def search_for_quotes(q, q_pts, txt_pt, is_p=False):
       q_size, before,after = False, False, False
-      ql_pre = len(q[0]) if is_p else 1
-      ql_pos = len(q[1]) if is_p else 1
+      q0     =     q[0] if is_p else q; q1     =     q[1] if is_p else q
+      ql_pre = len(q0)                ; ql_pos = len(q1)
       q_pts_beg = q_pts['beg'] if is_p else q_pts
       q_pts_end = q_pts['end'] if is_p else q_pts
-      count_q = len(q_pts_beg) + (len(q_pts_end) if is_p else 0)
-      count_qq = view.substr(sel).count('"')
-      if count_q - view.substr(sel).count('"') < 2: # not enough pairs
+      count_q  = len(q_pts_beg) + (len(q_pts_end) if is_p else 0)
+      count_qq = 0 # pairs of quotes within the selection
+      if q0 == q1:
+        count_qq = view.substr(sel).count(q0)
+      else:
+        sel_s = view.substr(sel)
+        count_qq = sel_s.count(q0) + sel_s.count(q1)
+      if count_q - count_qq < 2: # not enough pairs
         return q_size, before,after,  ql_pre,ql_pos
 
       # 1. Limit quotes to a string
