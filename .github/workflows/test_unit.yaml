@@ -1,0 +1,49 @@
+name: Run package tests using UnitTesting
+on:
+  repository_dispatch:
+    types:
+      - new_release
+  push:
+    branches    : ["main"]
+    paths-ignore:
+      - '.github/workflows/**/*'
+      - 'doc/**'
+      - '**.md'
+      - '**.sublime-*'
+  pull_request  :
+    branches    : ["**"]
+    paths-ignore:
+      - '.github/workflows/**/*'
+      - 'doc/**'
+      - '**.md'
+      - '**.sublime-*'
+  workflow_dispatch:
+jobs:
+  unittesting:
+    name: Unittesting (${{ matrix.os }})
+    strategy   :
+      fail-fast: false
+      matrix   :
+        st-v   : [4] #4, 3
+        os     : ["ubuntu-latest","macOS-latest","windows-latest"]
+    runs-on    : ${{ matrix.os }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd #v6.0.2 26-01 c04
+        with:
+          persist-credentials: false
+
+      - name: Setup UnitTesting
+        uses: SublimeText/UnitTesting/actions/setup@924d620a7e0ef373f47b30a728af931e0887dfee #branch v1 26-02 c04
+        with:
+          package-name        : 'Expand Selection to Quotes'
+          sublime-text-version:  ${{ matrix.st-v }}
+          extra-packages      : | #␤-list `package:user/repo@ref` or `user/repo@ref` if repo name=package name. `@ref` branch/tag name or prefix of tags e.g. `st3-` or empty. no match: latest tag is determined by semver x.y.z
+            MarkdownEditing:SublimeText-Markdown/MarkdownEditing@4200-
+            AutoHotkey:eugenesvk/SublimeAutoHotkey@dev
+
+      - name: Run UnitTesting
+        uses: SublimeText/UnitTesting/actions/run-tests@924d620a7e0ef373f47b30a728af931e0887dfee #branch v1 26-02 c04
+        with:
+          package-name        : 'Expand Selection to Quotes'
+          coverage            : false
