@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- 🐞 __Fixed__
+  + cfg: add missing cmt key
 
 [0.3.5]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.3.5
 ## [0.3.5]
