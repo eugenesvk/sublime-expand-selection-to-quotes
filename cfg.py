@@ -31,6 +31,8 @@ DEF['esc'] = ['constant.character.escape',] # List of scope names for quotes act
   # esc+ ¦ esc-   in user config adds/removes extra scopes without fully replacing the list
 DEF['str'] = ['meta.string','string.quoted.single','string.quoted.double',] # List of scope names for strings (limit quote matching to text within these)
   # str+ ¦ str-   in user config adds/removes extra scopes without fully replacing the list
+DEF['cmt'] = ['comment.line','comment.block',] # List of scope names for comments (limit quote matching to text within these)
+  # cmt+ ¦ cmt-   in user config adds/removes extra scopes without fully replacing the list
 
 import copy
 class cfgU(metaclass=Singleton):
@@ -45,12 +47,12 @@ class cfgU(metaclass=Singleton):
       setU = sublime.load_settings(cfgU_settings)
       setU.clear_on_change(PACKAGE_NAME)
       setU.add_on_change  (PACKAGE_NAME, lambda: cfgU.reload())
-      for k,T in {'q=':list,'qp':list,'esc':list,'str':list,}.items():
+      for k,T in {'q=':list,'qp':list,'esc':list,'str':list,'cmt':list,}.items():
         if k in setU:
           if type(val := setU.get(k)) is T:
             cfgU.C[k] = val
           else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
-      for k,T in {'esc':list,'str':list,'qp':list,}.items():
+      for k,T in {'esc':list,'str':list,'cmt':list,'qp':list,}.items():
         if (k_sfx:=k+'+') in setU:
           if type(val := setU.get(k_sfx)) is T:
             cfgU.C[k] += val
