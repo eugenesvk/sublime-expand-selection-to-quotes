@@ -10,4 +10,7 @@
  //          	  error     	turn                       ² into exceptions
 //"verbosity"	: 1,        	//2
 "coverage"   	: true,     	//F track test case coverage
+
+"capture_console"	: true,      	//F capture stdout/err in test output to see in CI
+//"output"       	: "test.log",	//null name of the test output instead of showing in the panel
 }
