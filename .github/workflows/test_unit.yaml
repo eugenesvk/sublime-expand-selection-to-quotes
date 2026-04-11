@@ -4,7 +4,7 @@ on:
     types:
       - new_release
   push:
-    branches    : ["main"]
+    branches    : ["main","master"]
     paths-ignore:
       - '.github/workflows/**/*'
       - 'doc/**'
