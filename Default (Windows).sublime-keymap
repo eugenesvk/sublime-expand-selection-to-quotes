@@ -1,11 +1,17 @@
-[
-// {"keys":["ctrl+'" ], "command":"expand_selection_to_quotes"},
-// {"keys":["ctrl+\""], "command":"expand_selection_to_quotes","args":{"qp":true}},
-// {"keys":["ctrl+\\"], "command":"expand_selection_to_quotes","args":{"qp":true,"inc":true}},
-
+[// qp=consider “paired” quotes; scope=select string scope; inc=include quotes in selection;
 // when using all variants, better group them behind a single command with double tap for the most frequently used
- // {"keys":["ctrl+l","ctrl+l" 	],"command":"expand_selection_to_quotes"	                              	},
- // {"keys":["ctrl+l","ctrl+;" 	],"command":"expand_selection_to_quotes"	,"args":{          "inc":true}	},
- // {"keys":["ctrl+l","ctrl+'" 	],"command":"expand_selection_to_quotes"	,"args":{"qp":true           }	},
- // {"keys":["ctrl+l","ctrl+\\"	],"command":"expand_selection_to_quotes"	,"args":{"qp":true,"inc":true}	},
+//{"keys":["ctrl+l","ctrl+l" ], "command":"expand_selection_to_quotes","args":{"qp"   :true           }},
+//{"keys":["ctrl+l","ctrl+'" ], "command":"expand_selection_to_quotes"                                 },
+//{"keys":["ctrl+l","ctrl+;" ], "command":"expand_selection_to_quotes","args":{"scope":true           }},
+//{"keys":["ctrl+l","ctrl+." ], "command":"expand_selection_to_quotes","args":{"qp"   :true,"inc":true}},
+//{"keys":["ctrl+l","ctrl+\\"], "command":"expand_selection_to_quotes","args":{             "inc":true}},
+//{"keys":["ctrl+l","ctrl+/" ], "command":"expand_selection_to_quotes","args":{"scope":true,"inc":true}},
+
+// Alternative non-sequence commands
+//{"keys":[      "ctrl+'" ], "command":"expand_selection_to_quotes","args":{"qp"   :true           }},
+//{"keys":[      "ctrl+\\"], "command":"expand_selection_to_quotes"                                 },
+//{"keys":[      "ctrl+;" ], "command":"expand_selection_to_quotes","args":{"scope":true           }},
+//{"keys":["shift+ctrl+'" ], "command":"expand_selection_to_quotes","args":{"qp"   :true,"inc":true}},
+//{"keys":["shift+ctrl+\\"], "command":"expand_selection_to_quotes","args":{             "inc":true}},
+//{"keys":["shift+ctrl+;" ], "command":"expand_selection_to_quotes","args":{"scope":true,"inc":true}},
 ]
