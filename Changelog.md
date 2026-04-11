@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file
 
-[unreleased]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/compare/0.3.6...HEAD
+[unreleased]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/compare/0.3.7...HEAD
 ## [Unreleased]
 <!-- - ✨ __Added__ -->
   <!-- + new features -->
@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+[0.3.7]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.3.7
+## [0.3.7]
 - ✨ __Added__
   + `scope` argument to select strings by scope, not quote chars (and quotes by punctuation scopes, not chars)
 
