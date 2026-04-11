@@ -49,6 +49,10 @@ class TestString(DeferrableViewTestCase):
         'txt' :R'''"•Select by scope “'in⎀ner'” string ignored•"''',  'qb': "'", 'qe': "'", 'qp':False, 'scope':True,
         False :   "21                                         12"  ,
         True  :   "1                                           1"  , },
+      'b' : {
+        'txt' :R'''"•Select by scope “•'in⎀ner'•” string ignored•"''',  'qb': "'", 'qe': "'", 'qp':True , 'scope':False,
+        False :   "65                4321    1234               56"  ,
+        True  :   "3                 2 1      1 2                3"  , },
     }
     view = self.view
     sels = view.sel()
