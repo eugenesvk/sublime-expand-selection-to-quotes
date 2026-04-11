@@ -9,16 +9,34 @@ _log.setLevel(DEFAULT_LOG_LEVEL)
 _L = False #dbg
 
 class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
-  def run(self, edit, qp=False, inc=False): # ↓ enable soft-undo
+  def run(self, edit, qp=False, inc=False, scope=False): # ↓ enable soft-undo
     sublime.set_timeout(lambda: self.view.run_command('expand_selection_to_quotes_atomic',
-      {"qp":qp, "inc": inc}),
+      {"qp":qp, "inc":inc, "scope":scope}),
       0) # delay
 
 class ExpandSelectionToQuotesAtomicCommand(sublime_plugin.TextCommand):
-  def run(self, edit, qp=False, inc=False):
+  def run(self, edit, qp=False, inc=False, scope=False):
     C = cfg.cfgU.C
     view = self.view
     flit = sublime.FindFlags.LITERAL
+
+    if scope:
+      for sel in view.sel():
+        txt_pt = sel.b # ignore selection, only use point @ ⎀
+        str_scopes = scope if type(scope) is list else C["str"]
+        for str_scope in str_scopes:
+          reg_str_full, (reg_str_b, reg_str_e) = self.search_for_scope(str_scope,txt_pt)
+          if reg_str_full:
+            s0  , s1  = sel      .begin(), sel      .end()
+            qb0 , qb1 = reg_str_b.begin(), reg_str_b.end()
+            qe0 , qe1 = reg_str_e.begin(), reg_str_e.end()
+            if not inc and (qb1 >= s0 and s1 >= qe0): # sel fully covers unquoted string, so select quotes
+              inc = True
+            view.sel().subtract(sel)
+            if inc: view.sel().add(reg_str_full)
+            else  : view.sel().add(sublime.Region(qb1, qe0))
+            break
+      return
 
     q_pt_all = {}
     for q in C['q=']: # " ' `
