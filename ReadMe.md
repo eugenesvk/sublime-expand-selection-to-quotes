@@ -15,7 +15,7 @@ Supports ‘pair-different’ quotes via a `qp` command argument: `«guillemets�
   - `“ Double fancy quotation ‟•in⎀ner•” string selected”`
   - `" Double fancy quotation ‟•in⎀ner•” string selected"`
 
-Supports selecting strings by scopes, bypassing quote chars:
+Supports selecting strings by scopes, bypassing quote chars (can be customized via user config or on a per-command basis via an argument):
 ```py
 a = "•Select by scope “'in⎀ner'” string ignored•"
 #   •                                           •  repeated command or with inc=true
