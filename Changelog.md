@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- ✨ __Added__
+  + `scope` argument to select strings by scope, not quote chars (and quotes by punctuation scopes, not chars)
+
 [0.3.6]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.3.6
 ## [0.3.6]
 - 🐞 __Fixed__
