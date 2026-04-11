@@ -167,3 +167,41 @@ class ExpandSelectionToQuotesAtomicCommand(sublime_plugin.TextCommand):
         end = pos_t + 1 + (pos_ql if inc else 0)
         replace_region(beg, end, pre_ql,pos_ql)
       if _L: _log.debug(f"min_sz={min_sz}")
+  def search_for_scope(self, scope_nm, txt_pt):
+    """Returns a range matching the scope and a pair of regions matching opening/closing quotes
+    """
+    C = cfg.cfgU.C
+    view = self.view
+
+    reg_str_full, reg_str_b, reg_str_e = None, None, None
+    scope_l = scope_nm if type(scope_nm) is list else [scope_nm]
+
+    txt_scope = view.scope_name(txt_pt) #e.g., "source.python meta.string…"
+
+    str_scope = None # Find string scope to expand to it (exclude open/close marks later)
+    for i_str in scope_l:
+      if i_str in txt_scope: # found partial 'string.', find full '….python'
+        for  i_txt in reversed(txt_scope.split()): # guard: search for most specific match first
+          if i_txt.startswith(i_str):
+            str_scope = i_txt
+            break
+    if str_scope and (reg_str_full := view.expand_to_scope(txt_pt, str_scope)):
+      str_b0 = reg_str_full.begin(); txt_sc_b0 = view.scope_name(str_b0)
+      str_e0 = reg_str_full.end  ();
+      if str_e0 > str_b0:
+        str_e0 -= 1
+      txt_sc_e0                                = view.scope_name(str_e0)
+
+      str_scope_b, str_scope_e = None, None
+      for i_str in C['str_b']: # partial scope names
+        for  i_txt in reversed(txt_sc_b0.split()): # guard: search for most specific match first
+          if i_txt.startswith(i_str):
+            reg_str_b = view.expand_to_scope(str_b0, i_txt)
+            break
+      for i_str in C['str_e']:
+        for  i_txt in reversed(txt_sc_e0.split()):
+          if i_txt.startswith(i_str):
+            reg_str_e = view.expand_to_scope(str_e0, i_txt)
+            break
+
+    return reg_str_full, (reg_str_b, reg_str_e)
