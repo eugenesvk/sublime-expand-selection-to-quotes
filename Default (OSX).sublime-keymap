@@ -1,4 +1,4 @@
-[// qp=consider “paired” quotes; scope=select string scope; inc=include quotes in selection;
+[// qp=consider “paired” quotes; scope=select string scope (can be a list of scopes to override config); inc=include quotes in selection;
 // when using all variants, better group them behind a single command with double tap for the most frequently used
 //{"keys":["super+l","super+l" ], "command":"expand_selection_to_quotes","args":{"qp"   :true           }},
 //{"keys":["super+l","super+'" ], "command":"expand_selection_to_quotes"                                 },
