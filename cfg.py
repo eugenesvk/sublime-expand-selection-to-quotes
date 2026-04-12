@@ -39,6 +39,8 @@ DEF['cmt'] = ['comment.line','comment.block',] # List of scope names for comment
 import copy
 class cfgU(metaclass=Singleton):
   C = dict()
+  c_types        = {'q=':list,'qp':list,'esc':list,'str':list,'cmt':list,'str_b':list,'str_e':list,}
+  c_types_add_rm = {          'qp':list,'esc':list,'str':list,'cmt':list,'str_b':list,'str_e':list,}
 
   @staticmethod
   def load() -> None:
@@ -53,20 +55,26 @@ class cfgU(metaclass=Singleton):
       _log.info(f'‘{cfgU_settings}’ file not found')
     except Exception as e:  # pragma: no cover
       _log.warn(f"‘{cfgU_settings}’ couldn't be loaded 𝑒: {e}")
-    for k,T in {'q=':list,'qp':list,'esc':list,'str':list,'cmt':list,'str_b':list,'str_e':list,}.items():
-      if k in setU:
-        if type(val := setU.get(k)) is T:
-          cfgU.C[k] = val
+    cfgU.add_rm(cfgU.C, setU)
+
+  @staticmethod
+  def add_rm(src, dst) -> None:
+    for k,T in cfgU.c_types.items():
+      if k in dst:
+        if type(val := dst.get(k)) is T:
+          src[k] = val
         else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
-    for k,T in {'esc':list,'str':list,'cmt':list,'qp':list,'str_b':list,'str_e':list,}.items():
-      if (k_sfx:=k+'+') in setU:
-        if type(val := setU.get(k_sfx)) is T:
-          cfgU.C[k] += val
+
+    for k,T in cfgU.c_types_add_rm.items():
+      if (k_sfx:=k+'+') in dst:
+        if type(val := dst.get(k_sfx)) is T:
+          src[k] += val
         else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
-      if (k_sfx:=k+'-') in setU:
-        if type(val := setU.get(k_sfx)):
-          if val in cfgU.C[k]:
-            cfgU.C[k].remove(val)
+      if   (k_sfx:=k+'-') in dst\
+        or (k_sfx:=k+'−') in dst: #real minus
+        if type(val := dst.get(k_sfx)):
+          if val in src[k]:
+            src[k].remove(val)
         else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
 
   @staticmethod
