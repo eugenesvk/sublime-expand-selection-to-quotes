@@ -57,7 +57,7 @@ a = "Hello don't break" #⎀'←do NOT break outside the comment scope'…
     - `scope`	   ≝`F` match by string scope instead of symbols (can be a `['list','of','scopes']` to override config file)
     - `inc`  	   ≝`F` include quotes in selection
     - `jail_str` ≝`T` do not "jump over" string  scope when matching quotes, see example above
-    - `jail_str` ≝`T` do not "jump over" comment scope when matching quotes, see example above
+    - `jail_cmt` ≝`T` do not "jump over" comment scope when matching quotes, see example above
 
 ## Known issues
 
