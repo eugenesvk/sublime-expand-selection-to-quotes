@@ -58,7 +58,7 @@ class cfgU(metaclass=Singleton):
         if type(val := setU.get(k)) is T:
           cfgU.C[k] = val
         else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
-    for k,T in {'esc':list,'str':list,'cmt':list,'qp':list,}.items():
+    for k,T in {'esc':list,'str':list,'cmt':list,'qp':list,'str_b':list,'str_e':list,}.items():
       if (k_sfx:=k+'+') in setU:
         if type(val := setU.get(k_sfx)) is T:
           cfgU.C[k] += val
