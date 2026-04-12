@@ -26,7 +26,7 @@ class ExpandSelectionToQuotesAtomicCommand(sublime_plugin.TextCommand):
         str_scopes = scope if type(scope) is list else C["str"]
         for str_scope in str_scopes:
           reg_str_full, (reg_str_b, reg_str_e) = self.search_for_scope(str_scope,txt_pt)
-          if reg_str_full:
+          if reg_str_full and reg_str_b and reg_str_e:
             s0  , s1  = sel      .begin(), sel      .end()
             qb0 , qb1 = reg_str_b.begin(), reg_str_b.end()
             qe0 , qe1 = reg_str_e.begin(), reg_str_e.end()
