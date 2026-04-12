@@ -74,6 +74,10 @@ class TestString(DeferrableViewTestCase):
         'txt' :R"""'•Ignore shorter pair of →‟ ⎀•'  +  '”← because this is a different string'""",  'qb': "'", 'qe': "'", 'qp':True,
         False :   " 1                           1                                             "  ,
         True  :   "1                             1                                            "  , },
+      'f_no_jail_str' : {
+        'txt' :R"""'•UnIgnore shorter pair of →‟• ⎀'  +  '•”← because we jailbreak from string scope!'""",  'qb': "'", 'qe': "'", 'qp':True, 'jail_str':False,
+        False :   "43                          21         12                                        34"  ,
+        True  :   "2                           1           1                                         2"  , },
       'g' : {
         'txt' :R"""' Select …       …       →‟•⎀       •”←               the same      …     '""",  'qb': "'", 'qe': "'", 'qp':True,
         False :   "                           1        1                                      "  ,
@@ -113,7 +117,11 @@ class TestString(DeferrableViewTestCase):
         lb = len(set_i['qb'])
         le = len(set_i['qe'])
         for pos_i in pos_valid:
-          view.run_command("expand_selection_to_quotes",{"qp":set_i['qp'],"inc":inc})
+          args = dict()
+          args['inc'] = inc
+          for k in ['qp','jail_str','jail_cmt']:
+            if k in set_i: args[k] = set_i[k]
+          view.run_command("expand_selection_to_quotes",args)
           yield #100
           m_i = [m.start() for m in re.finditer(pos_i, pos)]
           beg   =  m_i[0]        ; end   = (beg if len(m_i) == 1 else m_i[1]) + 1
