@@ -1,14 +1,12 @@
 Expands selections to the closest containing pairs of `'single'` or `"double"` quotes or ``` `backticks` ``` (user-configurable list of quotation marks).
 
-The default keybinding (disabled to avoid conflicts) <kbd>⌃</kbd><kbd>'</kbd> (<kbd>⌘</kbd><kbd>'</kbd> on macOS):
-
 (`⎀` is cursor location, `•` denotes selection range, `←` `→` are reference markers)
 
   - `"•Double quoted ⎀ string selected•"`
   - `"Double quoted outer '•inner ⎀ selected•' ignored"`
   - `"•Double quoted outer 'inner string ignored' ⎀ selected•"`
 
-Supports ‘pair-different’ quotes via a `qp` command argument: `«guillemets»` `‹›` `‘curved’` `‛’` `“”` `‟”` `„“` `🙶heavy🙷` (≝keybind disabled to avoid conflicts: <kbd>⌃</kbd><kbd>"</kbd> (<kbd>⌘</kbd><kbd>"</kbd> on macOS))
+Supports ‘pair-different’ quotes via a `qp` command argument: `«guillemets»` `‹›` `‘curved’` `‛’` `“”` `‟”` `„“` `🙶heavy🙷`
 
   - `«•Double guillemet ⎀ string selected•»`
   - `“•Double fancy quotation ⎀ string selected•”`
@@ -27,7 +25,7 @@ Can select quotes if called with an `inc` command argument (without one running 
   # •                      •
   ```
 
-Some language-awareness built-in — escape quotes ignored, search scope limited to strings:
+Some language-awareness built-in — escape quotes ignored, search scope limited to strings (can be overriden with a `jail_str` command argument):
 
 ```py
 a = '•Single quoted selected, \"\' esc⎀ped \'\" quotes ignored •'
@@ -37,7 +35,7 @@ d = '•Ignore shorter pair of →‟ ⎀•'  +  '”← because this is a diff
 d = ' Select …       …       →‟•⎀       •”←               the same      …     '
 ```
 
-Likewise, you can add similar behavior to custom scopes, e.g., not break out of line comments:
+Likewise, you can add similar behavior to custom scopes, e.g., not break out of line comments (can be overriden with a `jail_cmt` command argument):
 
 ```py
 # requires user config modification:  "str+":["comment.line"]
@@ -51,9 +49,15 @@ a = "Hello don't break" #⎀'←do NOT break outside the comment scope'…
     - Run command: `Preferences: Expand Selection to Quotes`
     - Open menu: `Preferences` → `Package Settings` → `Q̲ Expand Selection to Quotes` → `Q̲ Settings – Default+User` (Win: <kbd>⎇</kbd><kbd>N</kbd>, <kbd>P</kbd>, <kbd>Q</kbd>, <kbd>Q</kbd>)
     - Copy the opened default `Expand Selection to Quotes.sublime-settings` template to your config and follow its instructions
-  - Key bindings with quote-include / ‘pair-different’ quote arguments:
+  - Key bindings with quote-include / ‘pair-different’ / scope quote arguments (disabled to avoid conflicts):
     - Run command: `Preferences: Expand Selection to Quotes Key Bindings`
     - Open menu `Preferences` → `Package Settings` → `Q̲ Expand Selection to Quotes` → `E̲ Key Bindings – Default+User` (Win: <kbd>⎇</kbd><kbd>N</kbd>, <kbd>P</kbd>, <kbd>Q</kbd>, <kbd>E</kbd>)
+  - Custom command arguments:
+    - `qp`   	   ≝`F` match ‘pair-different’ quotes in addition to identical ones like ``` ' " ` ```
+    - `scope`	   ≝`F` match by string scope instead of symbols (can be a `['list','of','scopes']` to override config file)
+    - `inc`  	   ≝`F` include quotes in selection
+    - `jail_str` ≝`T` do not "jump over" string  scope when matching quotes, see example above
+    - `jail_str` ≝`T` do not "jump over" comment scope when matching quotes, see example above
 
 ## Known issues
 
