@@ -55,6 +55,7 @@ class cfgU(metaclass=Singleton):
       _log.info(f'‘{cfgU_settings}’ file not found')
     except Exception as e:  # pragma: no cover
       _log.warn(f"‘{cfgU_settings}’ couldn't be loaded 𝑒: {e}")
+    cfgU.settings = cfgU_settings
     cfgU.add_rm(cfgU.C, setU)
 
   @staticmethod
@@ -63,19 +64,19 @@ class cfgU(metaclass=Singleton):
       if k in dst:
         if type(val := dst.get(k)) is T:
           src[k] = val
-        else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
+        else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU.settings}’")
 
     for k,T in cfgU.c_types_add_rm.items():
       if (k_sfx:=k+'+') in dst:
         if type(val := dst.get(k_sfx)) is T:
           src[k] += val
-        else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
+        else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU.settings}’")
       if   (k_sfx:=k+'-') in dst\
         or (k_sfx:=k+'−') in dst: #real minus
         if type(val := dst.get(k_sfx)):
           if val in src[k]:
             src[k].remove(val)
-        else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
+        else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU.settings}’")
 
   @staticmethod
   def unload() -> None: # clear watcher
