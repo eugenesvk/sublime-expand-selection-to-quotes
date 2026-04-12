@@ -49,25 +49,25 @@ class cfgU(metaclass=Singleton):
       setU = sublime.load_settings(cfgU_settings)
       setU.clear_on_change(PACKAGE_NAME)
       setU.add_on_change  (PACKAGE_NAME, lambda: cfgU.reload())
-      for k,T in {'q=':list,'qp':list,'esc':list,'str':list,'cmt':list,'str_b':list,'str_e':list,}.items():
-        if k in setU:
-          if type(val := setU.get(k)) is T:
-            cfgU.C[k] = val
-          else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
-      for k,T in {'esc':list,'str':list,'cmt':list,'qp':list,}.items():
-        if (k_sfx:=k+'+') in setU:
-          if type(val := setU.get(k_sfx)) is T:
-            cfgU.C[k] += val
-          else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
-        if (k_sfx:=k+'-') in setU:
-          if type(val := setU.get(k_sfx)):
-            if val in cfgU.C[k]:
-              cfgU.C[k].remove(val)
-          else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
     except FileNotFoundError:
       _log.info(f'‘{cfgU_settings}’ file not found')
     except Exception as e:  # pragma: no cover
       _log.warn(f"‘{cfgU_settings}’ couldn't be loaded 𝑒: {e}")
+    for k,T in {'q=':list,'qp':list,'esc':list,'str':list,'cmt':list,'str_b':list,'str_e':list,}.items():
+      if k in setU:
+        if type(val := setU.get(k)) is T:
+          cfgU.C[k] = val
+        else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
+    for k,T in {'esc':list,'str':list,'cmt':list,'qp':list,}.items():
+      if (k_sfx:=k+'+') in setU:
+        if type(val := setU.get(k_sfx)) is T:
+          cfgU.C[k] += val
+        else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
+      if (k_sfx:=k+'-') in setU:
+        if type(val := setU.get(k_sfx)):
+          if val in cfgU.C[k]:
+            cfgU.C[k].remove(val)
+        else: _log.warn(f"‘{k}’ key should be {T}, not {type(val)}, from ‘{cfgU_settings}’")
 
   @staticmethod
   def unload() -> None: # clear watcher
