@@ -16,6 +16,10 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- ✨ __Added__
+  + command arguments to break out of str/cmt scope jails, i.e., expand to valid quotes even if they are outside of the current string/comment scope
+  + more custom commands to the command palette/selection menu/settings menu
+
 [0.3.7]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.3.7
 ## [0.3.7]
 - ✨ __Added__
