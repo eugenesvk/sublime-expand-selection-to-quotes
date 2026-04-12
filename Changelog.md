@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- 🐞 __Fixed__
+  + cfg: fix wrong var name in warnings
+
 [0.3.9]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.3.9
 ## [0.3.9]
 - ✨ __Added__
