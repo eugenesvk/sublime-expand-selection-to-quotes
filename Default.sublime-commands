@@ -1,4 +1,11 @@
 [
+{"caption":"Selection: Expand to Quotes ‹❚›"                 , "command":"expand_selection_to_quotes","args":{"qp"   :true           }},
+{"caption":"Selection: Expand to Quotes '❚'"                 , "command":"expand_selection_to_quotes"                                 },
+{"caption":"Selection: Expand to Quotes.by.Scope"            , "command":"expand_selection_to_quotes","args":{"scope":true           }},
+{"caption":"Selection: Expand to Quotes ‹❚› (inclusive)"     , "command":"expand_selection_to_quotes","args":{"qp"   :true,"inc":true}},
+{"caption":"Selection: Expand to Quotes '❚' (inclusive)"     , "command":"expand_selection_to_quotes","args":{             "inc":true}},
+{"caption":"Selection: Expand to Quotes.by.Scope (inclusive)", "command":"expand_selection_to_quotes","args":{"scope":true,"inc":true}},
+
 {"caption":"Preferences: Expand Selection to Quotes Key Bindings","command":"chain","args":{"commands":[
   {"command":"open_file","args":{"file":"${packages}/Expand Selection to Quotes/Default (${platform}).sublime-keymap"}},
   {"command":"open_file","args":{"file":"${packages}/User/Default (${platform}).sublime-keymap"   }},]}},
