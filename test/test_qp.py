@@ -74,10 +74,14 @@ class TestQuotePaired(DeferrableViewTestCase):
         lb = len(set_i['qb'])
         le = len(set_i['qe'])
         for pos_i in pos_valid:
-          view.run_command("expand_selection_to_quotes",{"qp":set_i['qp'],"inc":inc})
+          args = dict()
+          args['inc'] = inc
+          for k in ['qp','jail_str','jail_cmt']:
+            if k in set_i: args[k] = set_i[k]
+          view.run_command("expand_selection_to_quotes",args)
           yield #100
           m_i = [m.start() for m in re.finditer(pos_i, pos)]
-          beg   =  m_i[0]        ; end   = (beg if len(m_i) == 1 else m_i[1]) + 1
+          beg   =  m_i[0]        ; end   = (beg if len(m_i) == 1 else m_i[1]) + (0 if set_i.get('is_fail',0) else 1)
           beg_s = sels[0].begin(); end_s = sels[0].end()
           print(f"{pos_i} → {m_i}  i ≟ s: beg {beg}{'=' if beg == beg_s else '≠'}{beg_s} ¦ end {end}{'=' if end == end_s else '≠'}{end_s}")
           self.assertEqual(beg_s, beg); self.assertEqual(end_s, end)
