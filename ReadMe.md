@@ -58,6 +58,7 @@ a = "Hello don't break" #⎀'←do NOT break outside the comment scope'…
     - `inc`  	   ≝`F` include quotes in selection
     - `jail_str` ≝`T` do not "jump over" string  scope when matching quotes, see example above
     - `jail_cmt` ≝`T` do not "jump over" comment scope when matching quotes, see example above
+    - `c`        ≝`None` a dictionary to override any default/user settings
 
 ## Known issues
 
