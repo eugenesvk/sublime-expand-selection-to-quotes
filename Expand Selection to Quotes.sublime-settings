@@ -15,9 +15,9 @@
 // List of scope names for strings (don't match quotes outside them) and lists to +add/-remove from the base
 "str":["meta.string","string.quoted.single","string.quoted.double"],   "str+":[], "str-":[],  //string.unquoted  string.quoted.triple
 
-// List of scope names for strings' begin/end
-"str_b":["punctuation.definition.string.begin"],
-"str_e":["punctuation.definition.string.end"  ],
+// List of scope names for strings' begin/end and lists to +add/-remove from the base
+"str_b":["punctuation.definition.string.begin"],  "str_b+":[], "str_b-":[""],
+"str_e":["punctuation.definition.string.end"  ],  "str_b+":[], "str_b-":[""],
 
 // List of scope names for comments (don't match quotes outside them) and lists to +add/-remove from the base
 "cmt":["comment.line","comment.block"],  "cmt+":[], "cmt-":[],
