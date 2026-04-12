@@ -9,14 +9,21 @@ _log.setLevel(DEFAULT_LOG_LEVEL)
 _L = False #dbg
 
 class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
-  def run(self, edit, qp=False, inc=False, scope=False, jail_str=True, jail_cmt=True): # ↓ enable soft-undo
+  def run(self, edit, qp=False, inc=False, scope=False, jail_str=True, jail_cmt=True, c=None): # ↓ enable soft-undo
     sublime.set_timeout(lambda: self.view.run_command('expand_selection_to_quotes_atomic',
-      {"qp":qp, "inc":inc, "scope":scope, "jail_str":jail_str, "jail_cmt":jail_cmt}),
+      {"qp":qp, "inc":inc, "scope":scope, "jail_str":jail_str, "jail_cmt":jail_cmt, "c":c}),
       0) # delay
 
+import copy
 class ExpandSelectionToQuotesAtomicCommand(sublime_plugin.TextCommand):
-  def run(self, edit, qp=False, inc=False, scope=False, jail_str=True, jail_cmt=True):
+  C = cfg.cfgU.C
+
+  def run(self, edit, qp=False, inc=False, scope=False, jail_str=True, jail_cmt=True, c=None):
     C = cfg.cfgU.C
+    if c and type(c) is dict:
+      C = copy.deepcopy(cfg.cfgU.C) # avoids overriding defaults+user config
+      cfg.cfgU.add_rm(C, c)
+    self.C = C
     view = self.view
     flit = sublime.FindFlags.LITERAL
 
@@ -190,7 +197,7 @@ class ExpandSelectionToQuotesAtomicCommand(sublime_plugin.TextCommand):
   def search_for_scope(self, scope_nm, txt_pt):
     """Returns a range matching the scope and a pair of regions matching opening/closing quotes
     """
-    C = cfg.cfgU.C
+    C = self.C
     view = self.view
 
     reg_str_full, reg_str_b, reg_str_e = None, None, None
