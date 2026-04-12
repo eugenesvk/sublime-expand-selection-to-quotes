@@ -19,6 +19,7 @@
       {"caption":"E Key Bindings – Default+User" ,"mnemonic":"E","command":"chain"	,"args":{"commands":[
         {"command":"open_file","args":{"file":"${packages}/Expand Selection to Quotes/Default (${platform}).sublime-keymap"}},
         {"command":"open_file","args":{"file":"${packages}/User/Default (${platform}).sublime-keymap"}},]}},
+      {"caption":"R ReadMe","mnemonic":"R","command":"open_file","args":{"file":"${packages}/Expand Selection to Quotes/ReadMe.md"},},
       {"caption": "-"                                                                   		},
       {"caption":"Settings – Default+User (side-by-side)"     ,"command":"edit_settings"	,"args":{
         "base_file":"${packages}/Expand Selection to Quotes/Expand Selection To Quotes.sublime-settings",
