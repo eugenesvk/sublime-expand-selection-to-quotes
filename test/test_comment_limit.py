@@ -52,6 +52,10 @@ class TestString(DeferrableViewTestCase):
         #          …to match ↑
         False :   "                     1                                         "  ,
         True  :   "                     1                                         "  , },
+      'no_jail_cmt' : {
+        'txt' :R'''"Hello 'break" #⎀'←DO  break outside the comment scope…''',  'qb': "'", 'qe': "'", 'qp':False, 'jail_cmt':False,
+        False :   "       21       12                                     "  ,
+        True  :   "       1         1                                     "  , },
     }
     view = self.view
     sels = view.sel()
