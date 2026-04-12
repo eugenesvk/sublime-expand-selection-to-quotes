@@ -1,7 +1,15 @@
 [
 {"id":"selection", "children":[
-  {"caption":"Expand Selection to \"'`Quotes`'\"","mnemonic":"Q","id":"expand_selection_to_quotes","command":"expand_selection_to_quotes"}]
-},
+  {"caption":"Expand Selection to \"'`Quotes`'\"","id":"expand_selection_to_quotes","command":"expand_selection_to_quotes"},
+  {"caption":"Q Expand Selection to Quotes…","mnemonic":"Q","id":"expand-selection-to-quotes_pref_menu","children":[
+    {"caption":"Q     ‹❚›           (paired « ‹ ‘ ‛ “ ‟ „ 🙶)","mnemonic":"Q", "command":"expand_selection_to_quotes","args":{"qp"   :true           }},
+    {"caption":"E     '❚'            (identical ' \" `)"      ,"mnemonic":"E", "command":"expand_selection_to_quotes"                                 },
+    {"caption":"W     by.Scope (meta.string.) "         ,"mnemonic":"W", "command":"expand_selection_to_quotes","args":{"scope":true           }},
+    {"caption":"A     ‹❚›            (include quote marks)"   ,"mnemonic":"A", "command":"expand_selection_to_quotes","args":{"qp"   :true,"inc":true}},
+    {"caption":"D     '❚'            (include quote marks)"   ,"mnemonic":"D", "command":"expand_selection_to_quotes","args":{             "inc":true}},
+    {"caption":"S     by.Scope (include quote marks)"   ,"mnemonic":"S", "command":"expand_selection_to_quotes","args":{"scope":true,"inc":true}},
+  ]},
+]},
 {"caption":"Preferences","id":"preferences","children":[
   {"caption":"Package Settings","mnemonic":"P","id":"package-settings","children":[
     {"caption":"Q Expand Selection to Quotes","mnemonic":"Q","id":"expand-selection-to-quotes_pref","children":[
