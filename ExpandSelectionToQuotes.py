@@ -9,13 +9,13 @@ _log.setLevel(DEFAULT_LOG_LEVEL)
 _L = False #dbg
 
 class ExpandSelectionToQuotesCommand(sublime_plugin.TextCommand):
-  def run(self, edit, qp=False, inc=False, scope=False): # ↓ enable soft-undo
+  def run(self, edit, qp=False, inc=False, scope=False, jail_str=True, jail_cmt=True): # ↓ enable soft-undo
     sublime.set_timeout(lambda: self.view.run_command('expand_selection_to_quotes_atomic',
-      {"qp":qp, "inc":inc, "scope":scope}),
+      {"qp":qp, "inc":inc, "scope":scope, "jail_str":jail_str, "jail_cmt":jail_cmt}),
       0) # delay
 
 class ExpandSelectionToQuotesAtomicCommand(sublime_plugin.TextCommand):
-  def run(self, edit, qp=False, inc=False, scope=False):
+  def run(self, edit, qp=False, inc=False, scope=False, jail_str=True, jail_cmt=True):
     C = cfg.cfgU.C
     view = self.view
     flit = sublime.FindFlags.LITERAL
@@ -72,21 +72,23 @@ class ExpandSelectionToQuotesAtomicCommand(sublime_plugin.TextCommand):
       txt_scope = view.scope_name(txt_pt) #e.g., "source.python meta.function…"
 
       str_scope = None # Find string scope to avoid jumping outside of it
-      for  i_str in C['str']:
-        if str_scope: break
-        if i_str in txt_scope: # found partial 'meta.string', find full '….python'
-          for  i_txt in reversed(txt_scope.split()): # guard: search for most specific match first
-            if i_txt.startswith(i_str):
-              str_scope = i_txt
-              break
+      if jail_str:
+        for  i_str in C['str']:
+          if str_scope: break
+          if i_str in txt_scope: # found partial 'meta.string', find full '….python'
+            for  i_txt in reversed(txt_scope.split()): # guard: search for most specific match first
+              if i_txt.startswith(i_str):
+                str_scope = i_txt
+                break
       cmt_scope = None # Find comment scope to avoid jumping outside of it
-      for  i_cmt in C['cmt']:
-        if cmt_scope: break
-        if i_cmt in txt_scope: # found partial 'comment.line', find full '….number-sign.python'
-          for  i_txt in reversed(txt_scope.split()): # guard: search for most specific match first
-            if i_txt.startswith(i_cmt):
-              cmt_scope = i_txt
-              break
+      if jail_cmt:
+        for  i_cmt in C['cmt']:
+          if cmt_scope: break
+          if i_cmt in txt_scope: # found partial 'comment.line', find full '….number-sign.python'
+            for  i_txt in reversed(txt_scope.split()): # guard: search for most specific match first
+              if i_txt.startswith(i_cmt):
+                cmt_scope = i_txt
+                break
       src_scope = None # Find source scope to avoid jumping outside of it
       i_src = 'source.'
       if i_src in txt_scope: # found partial 'source.', find full '….python'
