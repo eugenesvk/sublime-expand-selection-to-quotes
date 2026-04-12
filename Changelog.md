@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- ✨ __Added__
+  + command argument `c` to override any user settings
+
 [0.3.8]: https://github.com/eugenesvk/sublime-expand-selection-to-quotes/releases/tag/0.3.8
 ## [0.3.8]
 - ✨ __Added__
